@@ -1,0 +1,57 @@
+[
+  {
+    "repository": "digital-twin-remediation",
+    "topic": "Microservice remediation evidence validity",
+    "status": "Empirical case study; ACM draft v0.3"
+  },
+  {
+    "repository": "attack-graph-evidence-quality",
+    "topic": "Provenance-aware attack-graph decisions",
+    "status": "Proposed"
+  },
+  {
+    "repository": "autonomous-pentest-authorization",
+    "topic": "Autonomous pentest authorization transitions",
+    "status": "Proposed"
+  },
+  {
+    "repository": "adaptive-deception-evaluation",
+    "topic": "Adaptive deception and policy evaluation",
+    "status": "Proposed"
+  },
+  {
+    "repository": "zkp-remediation-assurance",
+    "topic": "Private remediation assurance with ZKP",
+    "status": "Proposed"
+  },
+  {
+    "repository": "segmentation-semantics-rollback",
+    "topic": "Segmentation semantics and rollback",
+    "status": "Proposed"
+  },
+  {
+    "repository": "remediation-evidence-interfaces",
+    "topic": "Evidence-age interfaces for remediation approval",
+    "status": "Reserve"
+  },
+  {
+    "repository": "federated-unlearning-rare-classes",
+    "topic": "Federated unlearning of single-source attack classes",
+    "status": "On hold: literature overlap"
+  },
+  {
+    "repository": "ai-agent-offboarding-security",
+    "topic": "Ai Agent Offboarding Security",
+    "status": "Existing research repository; see its current evidence and limitations"
+  },
+  {
+    "repository": "ai-model-provenance-consistency",
+    "topic": "Ai Model Provenance Consistency",
+    "status": "Existing research repository; see its current evidence and limitations"
+  },
+  {
+    "repository": "secure-ai-memory-deletion",
+    "topic": "Secure Ai Memory Deletion",
+    "status": "Existing research repository; see its current evidence and limitations"
+  }
+]
