@@ -6,7 +6,7 @@ This index tracks separate research projects and their artifacts. The intended p
 
 | Repository | Topic | Status |
 | --- | --- | --- |
-| [digital-twin-remediation](https://github.com/ezekielologunde/digital-twin-remediation) | Microservice remediation evidence validity | Empirical case study; ACM draft v0.3 |
+| [digital-twin-remediation](https://github.com/ezekielologunde/digital-twin-remediation) | Microservice remediation evidence validity | Empirical case study; ACM draft v0.4; 24-trial retention validation complete |
 | [attack-graph-evidence-quality](https://github.com/ezekielologunde/attack-graph-evidence-quality) | Provenance-aware attack-graph decisions | Proposed |
 | [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | Proposed |
 | [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Proposed |

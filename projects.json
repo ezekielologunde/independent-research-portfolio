@@ -2,7 +2,7 @@
   {
     "repository": "digital-twin-remediation",
     "topic": "Microservice remediation evidence validity",
-    "status": "Empirical case study; ACM draft v0.3"
+    "status": "Empirical case study; ACM draft v0.4; 24-trial retention validation complete"
   },
   {
     "repository": "attack-graph-evidence-quality",
