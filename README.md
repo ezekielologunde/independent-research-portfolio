@@ -14,9 +14,9 @@ This index tracks separate research projects and their artifacts. The intended p
 | [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Proposed |
 | [remediation-evidence-interfaces](https://github.com/ezekielologunde/remediation-evidence-interfaces) | Evidence-age interfaces for remediation approval | Reserve |
 | [federated-unlearning-rare-classes](https://github.com/ezekielologunde/federated-unlearning-rare-classes) | Federated unlearning of single-source attack classes | On hold: literature overlap |
-| [ai-agent-offboarding-security](https://github.com/ezekielologunde/ai-agent-offboarding-security) | Ai Agent Offboarding Security | Existing research repository; see its current evidence and limitations |
-| [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Existing research repository; see its current evidence and limitations |
-| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure Ai Memory Deletion | Existing research repository; see its current evidence and limitations |
+| [ai-agent-offboarding-security](https://github.com/ezekielologunde/ai-agent-offboarding-security) | Ai Agent Offboarding Security | Existing private repository; requires owner access |
+| [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Existing private repository; requires owner access |
+| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure Ai Memory Deletion | Existing private repository; requires owner access |
 
 ## Working convention
 

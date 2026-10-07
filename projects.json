@@ -42,16 +42,16 @@
   {
     "repository": "ai-agent-offboarding-security",
     "topic": "Ai Agent Offboarding Security",
-    "status": "Existing research repository; see its current evidence and limitations"
+    "status": "Existing private repository; requires owner access"
   },
   {
     "repository": "ai-model-provenance-consistency",
     "topic": "Ai Model Provenance Consistency",
-    "status": "Existing research repository; see its current evidence and limitations"
+    "status": "Existing private repository; requires owner access"
   },
   {
     "repository": "secure-ai-memory-deletion",
     "topic": "Secure Ai Memory Deletion",
-    "status": "Existing research repository; see its current evidence and limitations"
+    "status": "Existing private repository; requires owner access"
   }
 ]
