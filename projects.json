@@ -7,7 +7,7 @@
   {
     "repository": "attack-graph-evidence-quality",
     "topic": "Provenance-aware attack-graph decisions",
-    "status": "Proposed"
+    "status": "Synthetic development pilots v0.1 and v0.2 complete; novelty and held-out validation pending"
   },
   {
     "repository": "autonomous-pentest-authorization",
