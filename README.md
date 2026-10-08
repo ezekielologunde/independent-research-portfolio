@@ -9,7 +9,7 @@ This index tracks separate research projects and their artifacts. The intended p
 | [digital-twin-remediation](https://github.com/ezekielologunde/digital-twin-remediation) | Microservice remediation evidence validity | Empirical case study; ACM draft v0.4; 24-trial retention validation complete |
 | [attack-graph-evidence-quality](https://github.com/ezekielologunde/attack-graph-evidence-quality) | Provenance-aware attack-graph decisions | Synthetic development pilots v0.1 and v0.2 complete; novelty and held-out validation pending |
 | [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | Proposed |
-| [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Proposed |
+| [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Novel-method route closed after contribution gate; bounded simulator study, reduced A-OPS reproduction, and draft preserved |
 | [zkp-remediation-assurance](https://github.com/ezekielologunde/zkp-remediation-assurance) | Private remediation assurance with ZKP | Proposed |
 | [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Proposed |
 | [remediation-evidence-interfaces](https://github.com/ezekielologunde/remediation-evidence-interfaces) | Evidence-age interfaces for remediation approval | Reserve |
