@@ -10,7 +10,7 @@ This index tracks separate research projects and their artifacts. The intended p
 | [attack-graph-evidence-quality](https://github.com/ezekielologunde/attack-graph-evidence-quality) | Provenance-aware attack-graph decisions | Synthetic development pilots v0.1 and v0.2 complete; novelty and held-out validation pending |
 | [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | Proposed |
 | [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Novel-method route closed after contribution gate; bounded simulator study, reduced A-OPS reproduction, and draft preserved |
-| [zkp-remediation-assurance](https://github.com/ezekielologunde/zkp-remediation-assurance) | Private remediation assurance with ZKP | Proposed |
+| [zkp-remediation-assurance](https://github.com/ezekielologunde/zkp-remediation-assurance) | Private remediation assurance with ZKP | Active feasibility audit: threat model, literature review, public fixtures and local proof-interface pilot; novelty unestablished |
 | [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Proposed |
 | [remediation-evidence-interfaces](https://github.com/ezekielologunde/remediation-evidence-interfaces) | Evidence-age interfaces for remediation approval | Reserve |
 | [federated-unlearning-rare-classes](https://github.com/ezekielologunde/federated-unlearning-rare-classes) | Federated unlearning of single-source attack classes | On hold: literature overlap |
