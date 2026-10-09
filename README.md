@@ -20,7 +20,7 @@ This index tracks separate research projects and their artifacts. The intended p
 
 ## Applied AI engineering projects
 
-Four additional [portfolio build scaffolds](engineering/README.md) are now tracked separately from manuscript research: AI SOC triage, agent security evaluation, Rowmio mastery diagnosis and the Cyntraix GRC copilot. The SOC vertical slice is the first build candidate. These are plans, with no measured results or live demos yet. Existing Rowmio and Cyntraix projects should be extended after inspection. Research claims still require a literature-derived gap; engineering delivery is evaluated through working behavior and reproducible measurements.
+Four additional [portfolio build scaffolds](engineering/README.md) are now tracked separately from manuscript research: AI SOC triage, agent security evaluation, Rowmio mastery diagnosis and the Cyntraix GRC copilot. The SOC vertical slice now has a public deterministic demo, linked below. The other three remain plans without live demos or measured results. Existing Rowmio and Cyntraix projects should be extended after inspection. Research claims still require a literature-derived gap; engineering delivery is evaluated through working behavior and reproducible measurements.
 
 ## Research artifact convention
 
@@ -29,3 +29,9 @@ Each repository is the project home for literature evidence, protocol versions, 
 Dataset releases require provenance, version, license and hashes. Publish acquisition instructions for data that cannot be redistributed. Never upload private school records, credentials, participant data, or copyrighted literature PDFs. Original work remains unlicensed unless the author explicitly chooses otherwise. Third-party notices remain applicable.
 
 The first eight entries come from the October 4, 2026 independent research portfolio. Reserve and hold entries are repository scaffolds, not completed studies. The three additional repositories already existed and are linked without rewriting their contents. A DOI, final paper and journal acceptance should be added only when they actually exist.
+
+### SOC Review demo
+
+[SOC Review](https://soc-review-ezekiel.wealthdj.chatgpt.site) is now public, with [source](https://github.com/ezekielologunde/ai-soc-triage). It supports six synthetic alerts, evidence review, local decisions and executable checks. Six Node tests and 14 development checks passed. This is a deterministic baseline, with no live LLM or SIEM and no independent accuracy or time-saving claim. The other engineering projects remain plans.
+
+

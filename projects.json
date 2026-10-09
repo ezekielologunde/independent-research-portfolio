@@ -56,11 +56,12 @@
   },
   {
     "id": "ai-soc-triage",
-    "repository": null,
+    "repository": "https://github.com/ezekielologunde/ai-soc-triage",
     "topic": "AI SOC triage agent",
     "track": "applied-ai-engineering",
-    "status": "Planning scaffold; no deployment or measured results",
-    "brief": "engineering/ai-soc-analyst.md"
+    "status": "Public deterministic demo; synthetic fixtures; no live LLM or SIEM",
+    "brief": "engineering/ai-soc-analyst.md",
+    "demo": "https://soc-review-ezekiel.wealthdj.chatgpt.site"
   },
   {
     "id": "agent-security-eval",
