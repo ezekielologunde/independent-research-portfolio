@@ -53,5 +53,37 @@
     "repository": "secure-ai-memory-deletion",
     "topic": "Secure Ai Memory Deletion",
     "status": "Existing private repository; requires owner access"
+  },
+  {
+    "id": "ai-soc-triage",
+    "repository": null,
+    "topic": "AI SOC triage agent",
+    "track": "applied-ai-engineering",
+    "status": "Planning scaffold; no deployment or measured results",
+    "brief": "engineering/ai-soc-analyst.md"
+  },
+  {
+    "id": "agent-security-eval",
+    "repository": null,
+    "topic": "Sandboxed agent security evaluation",
+    "track": "applied-ai-engineering",
+    "status": "Planning scaffold; no deployment or measured results",
+    "brief": "engineering/agent-security-eval.md"
+  },
+  {
+    "id": "rowmio-mastery",
+    "repository": null,
+    "topic": "Rowmio tutor and mastery diagnosis",
+    "track": "applied-ai-engineering",
+    "status": "Planning scaffold; no deployment or measured results",
+    "brief": "engineering/rowmio-mastery.md"
+  },
+  {
+    "id": "cyntraix-grc",
+    "repository": null,
+    "topic": "Cyntraix policy-to-control copilot",
+    "track": "applied-ai-engineering",
+    "status": "Planning scaffold; no deployment or measured results",
+    "brief": "engineering/cyntraix-grc.md"
   }
 ]

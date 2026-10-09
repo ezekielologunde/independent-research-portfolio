@@ -18,7 +18,11 @@ This index tracks separate research projects and their artifacts. The intended p
 | [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Existing private repository; requires owner access |
 | [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure Ai Memory Deletion | Existing private repository; requires owner access |
 
-## Working convention
+## Applied AI engineering projects
+
+Four additional [portfolio build scaffolds](engineering/README.md) are now tracked separately from manuscript research: AI SOC triage, agent security evaluation, Rowmio mastery diagnosis and the Cyntraix GRC copilot. The SOC vertical slice is the first build candidate. These are plans, with no measured results or live demos yet. Existing Rowmio and Cyntraix projects should be extended after inspection. Research claims still require a literature-derived gap; engineering delivery is evaluated through working behavior and reproducible measurements.
+
+## Research artifact convention
 
 Each repository is the project home for literature evidence, protocol versions, code, eligible datasets, analysis, draft manuscripts, and eventually an author-permitted final paper. Plans, exploratory results, and final studies must be clearly distinguished. Preserve failed and excluded experiments. Freeze plans before collection and record amendments.
 
