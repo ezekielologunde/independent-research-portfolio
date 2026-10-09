@@ -65,11 +65,12 @@
   },
   {
     "id": "agent-security-eval",
-    "repository": null,
+    "repository": "https://github.com/ezekielologunde/agent-security-eval",
     "topic": "Sandboxed agent security evaluation",
     "track": "applied-ai-engineering",
-    "status": "Planning scaffold; no deployment or measured results",
-    "brief": "engineering/agent-security-eval.md"
+    "status": "Real run complete: 5 hand-authored cases x 3 policies against qwen2.5-3b-cpu4 over local Ollama, deterministic code oracle over the mock-tool call log. Not a published benchmark or a general safety claim.",
+    "brief": "engineering/agent-security-eval.md",
+    "demo": "https://ezekielologunde.github.io/agent-security-eval/"
   },
   {
     "id": "rowmio-mastery",
