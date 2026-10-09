@@ -61,7 +61,7 @@
     "track": "applied-ai-engineering",
     "status": "Public deterministic demo; synthetic fixtures; no live LLM or SIEM",
     "brief": "engineering/ai-soc-analyst.md",
-    "demo": "https://soc-review-ezekiel.wealthdj.chatgpt.site"
+    "demo": "https://soc-review.vercel.app"
   },
   {
     "id": "agent-security-eval",
@@ -73,11 +73,12 @@
   },
   {
     "id": "rowmio-mastery",
-    "repository": null,
+    "repository": "https://github.com/ezekielologunde/rowmio-mastery-demo",
     "topic": "Rowmio tutor and mastery diagnosis",
     "track": "applied-ai-engineering",
-    "status": "Planning scaffold; no deployment or measured results",
-    "brief": "engineering/rowmio-mastery.md"
+    "status": "Public client-side demo of the real, ported mastery state machine on one synthetic objective; real D1 implementation (migration, state machine, API routes) landed in the private rowmio monorepo, not deployed publicly",
+    "brief": "engineering/rowmio-mastery.md",
+    "demo": "https://ezekielologunde.github.io/rowmio-mastery-demo/"
   },
   {
     "id": "cyntraix-grc",
