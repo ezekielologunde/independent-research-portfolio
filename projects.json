@@ -83,10 +83,11 @@
   },
   {
     "id": "cyntraix-grc",
-    "repository": null,
+    "repository": "https://github.com/ezekielologunde/cyntraix-grc-copilot-demo",
     "topic": "Cyntraix policy-to-control copilot",
     "track": "applied-ai-engineering",
-    "status": "Planning scaffold; no deployment or measured results",
-    "brief": "engineering/cyntraix-grc.md"
+    "status": "Real run complete: 3 mapping methods (keyword, embedding-retrieval, model-assisted) on 8 synthetic policy clauses against an 8-control NIST SP 800-53 subset, citations verified against source text by code. Not a compliance certification or an adjudicated accuracy claim.",
+    "brief": "engineering/cyntraix-grc.md",
+    "demo": "https://ezekielologunde.github.io/cyntraix-grc-copilot-demo/"
   }
 ]
