@@ -20,6 +20,12 @@ This index tracks separate research projects and their artifacts. The intended p
 
 ## Applied AI engineering projects
 
+## Additional proposed research topics
+
+- **Agentic Identity and Access Management (IAM): Designing Zero-Trust Security Frameworks for Autonomous AI Agents.** Added October 9, 2026 at the author's request. Proposed scope: traditional IAM limitations, Zero-Trust architecture, decentralized identifiers/verifiable credentials, governance and policy enforcement, threat modeling, and cloud IAM convergence. Backlog topic only; no dedicated repository or Word document created. Proposed GWU ScholarSpace connections, including record `9019s328x`, references, contributions, objectives and the suggested 22-week schedule remain unverified. This addition does not replace the ongoing computational authorization-policy review. Any future study must have an executable evaluation that does not require unavailable human verification.
+
+## Applied AI engineering project details
+
 Four additional [portfolio build scaffolds](engineering/README.md) are now tracked separately from manuscript research: AI SOC triage, agent security evaluation, Rowmio mastery diagnosis and the Cyntraix GRC copilot. The SOC vertical slice now has a public deterministic demo, linked below. The other three remain plans without live demos or measured results. Existing Rowmio and Cyntraix projects should be extended after inspection. Research claims still require a literature-derived gap; engineering delivery is evaluated through working behavior and reproducible measurements.
 
 ## Research artifact convention
