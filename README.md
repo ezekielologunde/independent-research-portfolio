@@ -39,3 +39,7 @@ The first eight entries come from the October 4, 2026 independent research portf
 [SOC Review](https://soc-review-ezekiel.wealthdj.chatgpt.site) is now public, with [source](https://github.com/ezekielologunde/ai-soc-triage). It supports six synthetic alerts, evidence review, local decisions and executable checks. Six Node tests and 14 development checks passed. This is a deterministic baseline, with no live LLM or SIEM and no independent accuracy or time-saving claim. The other engineering projects remain plans.
 
 
+
+## Shared research and future extensions
+
+[ResearchGate inventory and follow-up queue](RESEARCHGATE.md) adds 85 profile listings (50 labeled articles and 35 preprints) to this master index, with [structured records](researchgate-inventory.json). These are listed works, not 85 independently verified journal publications. The snapshot flags future dates and a duplicate title. ResearchGate is the designated destination for sharing finished manuscripts; GitHub retains reproducible artifacts. After completing the current roadmap, revisit these studies for literature-grounded extensions and improvements.
