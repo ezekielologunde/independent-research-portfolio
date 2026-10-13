@@ -52,3 +52,7 @@ The first eight entries come from the October 4, 2026 independent research portf
 These deposits supplement the original 85-entry inventory snapshot. They do not establish peer review, journal acceptance or exclusive novelty. Closest-work full-method access remains unresolved for parts of the Confidence literature review.
 
 Next research gate: resume the computational policy-repair literature review in `remediation-evidence-interfaces`. Its human-study route remains on hold and its synthetic audit is feasibility infrastructure only. Establish a defensible closest-work gap, baselines and rejection criteria before additional experiments or HPC allocation.
+
+## Auditor preprint deposit, October 13, 2026
+
+[Passing the Plan, Missing the Exception](https://www.researchgate.net/publication/415729719), DOI `10.13140/RG.2.2.24479.32168`, is shared as a preprint with the ACM PDF. This is not peer-reviewed acceptance. Constructed acceptance-gap findings and released-output negative results are both retained. Current next project: segmentation-semantics-rollback, literature gate resumed; no new experiments yet.
