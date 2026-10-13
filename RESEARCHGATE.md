@@ -99,3 +99,14 @@ Finish the current roadmap before activating this follow-up queue. Then retrieve
 | RG-083 | Cryptographic Protocols for Electronic Voting Systems: A Comprehensive Framework for Secure Democratic Processes | Article | Dec 2023 | Metadata verification pending |
 | RG-084 | Ransomware and Social Engineering: A Critical Examination of Psychological Triggers and Defense Strategies | Article | Oct 2023 | Metadata verification pending |
 | RG-085 | The Precolonial Architecture style missing today in Nigeria | Article | Dec 2022 | Metadata verification pending |
+
+## Subsequent deposit receipts
+
+The original 85 listings above remain a dated snapshot. Two subsequent preprints were deposited on October 13, 2026:
+
+| Record | DOI | Artifact status |
+|---|---|---|
+| [When Confidence Exceeds Capacity](https://www.researchgate.net/publication/415723007) | 10.13140/RG.2.2.30121.97120 | Six-page confidence-capacity_acm.pdf confirmed public; obsolete main.pdf made private; one public attachment remains |
+| [Where Revocation Takes Effect](https://www.researchgate.net/publication/415723623) | 10.13140/RG.2.2.35155.13607 | ACM preprint deposit confirmed earlier in this session; not rechecked during replacement |
+
+Preprint sharing is not journal publication or peer-review acceptance. No raw-data revalidation or new experiments were performed for the formatting replacement.

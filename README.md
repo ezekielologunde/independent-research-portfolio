@@ -2,13 +2,13 @@
 
 **Ezekiel Ologunde | Independent Researcher | No institutional affiliation**
 
-This index tracks separate research projects and their artifacts. The intended publication route is an appropriate ACM journal, selected for each completed study. There is no claim of ACM acceptance. Corresponding email remains pending.
+This index tracks separate research projects and their artifacts. The intended publication route is an appropriate ACM journal, selected for each completed study. There is no claim of ACM acceptance. Contact: ologunde@bu.edu. No corresponding-author designation.
 
 | Repository | Topic | Status |
 | --- | --- | --- |
 | [digital-twin-remediation](https://github.com/ezekielologunde/digital-twin-remediation) | Microservice remediation evidence validity | Empirical case study; ACM draft v0.4; 24-trial retention validation complete |
 | [attack-graph-evidence-quality](https://github.com/ezekielologunde/attack-graph-evidence-quality) | Provenance-aware attack-graph decisions | Synthetic development pilots v0.1 and v0.2 complete; novelty and held-out validation pending |
-| [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | Proposed |
+| [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | ResearchGate preprint shared; bounded integration study, not journal acceptance |
 | [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Novel-method route closed after contribution gate; bounded simulator study, reduced A-OPS reproduction, and draft preserved |
 | [zkp-remediation-assurance](https://github.com/ezekielologunde/zkp-remediation-assurance) | Private remediation assurance with ZKP | Active feasibility audit: verified Circom/Noir proof comparison, TrustBOM real-receipt reproduction with negative controls; novelty unestablished |
 | [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Proposed |
@@ -43,3 +43,12 @@ The first eight entries come from the October 4, 2026 independent research portf
 ## Shared research and future extensions
 
 [ResearchGate inventory and follow-up queue](RESEARCHGATE.md) adds 85 profile listings (50 labeled articles and 35 preprints) to this master index, with [structured records](researchgate-inventory.json). These are listed works, not 85 independently verified journal publications. The snapshot flags future dates and a duplicate title. ResearchGate is the designated destination for sharing finished manuscripts; GitHub retains reproducible artifacts. After completing the current roadmap, revisit these studies for literature-grounded extensions and improvements.
+
+## Confirmed preprint deposits, October 13, 2026
+
+- [When Confidence Exceeds Capacity](https://www.researchgate.net/publication/415723007), DOI `10.13140/RG.2.2.30121.97120`: [project](https://github.com/ezekielologunde/ids-telemetry-shift). Corrected six-page ACM PDF is the sole public attachment; prior nine-page file retained privately. Browser verification confirmed the file name, six rendered pages and one public file.
+- [Where Revocation Takes Effect](https://www.researchgate.net/publication/415723623), DOI `10.13140/RG.2.2.35155.13607`: [project](https://github.com/ezekielologunde/autonomous-pentest-authorization). Preprint deposit recorded earlier in this session; not rechecked during the Confidence replacement.
+
+These deposits supplement the original 85-entry inventory snapshot. They do not establish peer review, journal acceptance or exclusive novelty. Closest-work full-method access remains unresolved for parts of the Confidence literature review.
+
+Next research gate: resume the computational policy-repair literature review in `remediation-evidence-interfaces`. Its human-study route remains on hold and its synthetic audit is feasibility infrastructure only. Establish a defensible closest-work gap, baselines and rejection criteria before additional experiments or HPC allocation.
