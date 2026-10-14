@@ -102,7 +102,8 @@
     "repository": null,
     "id": "agentic-iam-assurance",
     "topic": "Agentic IAM: authorization semantic preservation",
-    "status": "Active literature screening; generic framework and budget-conservation claims rejected; interoperability candidate unverified; no experiments",
-    "local_path": "C:\\Users\\WT8\\Projects\\agentic-iam-assurance"
+    "status": "Local ACM/Overleaf empirical manuscript verified: 121 false-accept pairs in 8649, native and HTTP reproduction, scoped correction validated; no first-discovery or acceptance claim; not externally published",
+    "local_path": "C:\\Users\\WT8\\Projects\\agentic-iam-assurance",
+    "deliverables": "C:\\Users\\WT8\\Projects\\agentic-iam-assurance\\deliverables"
   }
 ]
