@@ -27,7 +27,8 @@
   {
     "repository": "segmentation-semantics-rollback",
     "topic": "Segmentation semantics and rollback",
-    "status": "Proposed"
+    "status": "Verified bounded Kube-burner measurement defect and candidate correction; preserve engineering result; novelty-focused manuscript deprioritized after independent source review; live threshold-consequence experiment unresolved",
+    "decision_record": "https://github.com/ezekielologunde/segmentation-semantics-rollback/blob/main/analysis/final-continuation-decision.json"
   },
   {
     "repository": "remediation-evidence-interfaces",
