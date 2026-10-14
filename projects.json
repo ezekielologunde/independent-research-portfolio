@@ -22,7 +22,7 @@
   {
     "repository": "zkp-remediation-assurance",
     "topic": "Private remediation assurance with ZKP",
-    "status": "Proposed"
+    "status": "Complete bounded empirical ACM manuscript v0.4; 111 checks; source and client integration findings; first-discovery priority and journal acceptance unconfirmed"
   },
   {
     "repository": "segmentation-semantics-rollback",
@@ -97,5 +97,12 @@
     "repository": "ids-telemetry-shift",
     "topic": "When Confidence Exceeds Capacity: intrusion-detection triage under telemetry and domain shift",
     "status": "ResearchGate preprint; six-page ACM revision is sole public file, verified 2026-10-13; novelty bounded"
+  },
+  {
+    "repository": null,
+    "id": "agentic-iam-assurance",
+    "topic": "Agentic IAM: authorization semantic preservation",
+    "status": "Active literature screening; generic framework and budget-conservation claims rejected; interoperability candidate unverified; no experiments",
+    "local_path": "C:\\Users\\WT8\\Projects\\agentic-iam-assurance"
   }
 ]

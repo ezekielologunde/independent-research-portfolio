@@ -60,3 +60,7 @@ Current research gate (October 13): inspect the incomplete-provenance extension 
 ## Active gate, October 14, 2026
 
 The secure-memory-deletion mechanism and policy-tradeoff extensions did not clear their contribution gates. See that repository's audit reports. Next screening target: AI model provenance consistency, in its existing private repository and local Projects folder. This is a literature and native-contract review, not an approved experiment or established novelty. Earlier next-project statements above are historical.
+
+## Current project, October 14, 2026
+
+Agentic IAM assurance is now the active literature screen in `C:\Users\WT8\Projects\agentic-iam-assurance`. The broad framework and budget-conservation directions overlap existing work. Cross-implementation authorization semantics is a candidate under review, not an established gap or approved experiment. ZKP remediation assurance has a completed bounded empirical manuscript v0.4 with 111 package checks and an extracted-client integration result; first-discovery priority and journal acceptance remain unconfirmed. Earlier active-project notes above are historical.
