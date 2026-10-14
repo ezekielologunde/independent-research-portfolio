@@ -14,9 +14,9 @@ This index tracks separate research projects and their artifacts. The intended p
 | [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Verified bounded measurement defect; engineering result preserved; novelty-focused manuscript deprioritized |
 | [remediation-evidence-interfaces](https://github.com/ezekielologunde/remediation-evidence-interfaces) | Evidence-age interfaces for remediation approval | Reserve |
 | [federated-unlearning-rare-classes](https://github.com/ezekielologunde/federated-unlearning-rare-classes) | Federated unlearning of single-source attack classes | On hold: literature overlap |
-| [ai-agent-offboarding-security](https://github.com/ezekielologunde/ai-agent-offboarding-security) | Ai Agent Offboarding Security | Existing private repository; requires owner access |
-| [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Existing private repository; requires owner access |
-| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure AI Memory Deletion | Existing controlled study accessed; incomplete-provenance extension under literature screening; no new novelty claim |
+| [ai-agent-offboarding-security](https://github.com/ezekielologunde/ai-agent-offboarding-security) | Ai Agent Offboarding Security | Private repository; authenticated access confirmed October 14; contents remain private |
+| [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Private repository; authenticated access confirmed October 14; contents remain private |
+| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure AI Memory Deletion | Controlled study preserved; deletion extensions deprioritized after literature gates; journal submission on hold |
 
 ## Additional proposed research topics
 
@@ -56,3 +56,7 @@ Current research gate (October 13): inspect the incomplete-provenance extension 
 ## Auditor preprint deposit, October 13, 2026
 
 [Passing the Plan, Missing the Exception](https://www.researchgate.net/publication/415729719), DOI `10.13140/RG.2.2.24479.32168`, is shared as a preprint with the ACM PDF. This is not peer-reviewed acceptance. Constructed acceptance-gap findings and released-output negative results are both retained. Current next project: segmentation-semantics-rollback, literature gate resumed; no new experiments yet.
+
+## Active gate, October 14, 2026
+
+The secure-memory-deletion mechanism and policy-tradeoff extensions did not clear their contribution gates. See that repository's audit reports. Next screening target: AI model provenance consistency, in its existing private repository and local Projects folder. This is a literature and native-contract review, not an approved experiment or established novelty. Earlier next-project statements above are historical.
