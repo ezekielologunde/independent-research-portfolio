@@ -53,7 +53,9 @@
   {
     "repository": "secure-ai-memory-deletion",
     "topic": "Secure Ai Memory Deletion",
-    "status": "Existing private repository; requires owner access"
+    "status": "Repository accessed and cloned locally; existing completed controlled study identified. Extension screening: selective source revocation under incomplete provenance; novelty unestablished, no new experiments",
+    "local_path": "C:\\Users\\WT8\\Projects\\secure-ai-memory-deletion",
+    "next_review": "outputs/extension-screening-2026-10-13.json"
   },
   {
     "id": "ai-soc-triage",

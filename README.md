@@ -11,12 +11,12 @@ This index tracks separate research projects and their artifacts. The intended p
 | [autonomous-pentest-authorization](https://github.com/ezekielologunde/autonomous-pentest-authorization) | Autonomous pentest authorization transitions | ResearchGate preprint shared; bounded integration study, not journal acceptance |
 | [adaptive-deception-evaluation](https://github.com/ezekielologunde/adaptive-deception-evaluation) | Adaptive deception and policy evaluation | Novel-method route closed after contribution gate; bounded simulator study, reduced A-OPS reproduction, and draft preserved |
 | [zkp-remediation-assurance](https://github.com/ezekielologunde/zkp-remediation-assurance) | Private remediation assurance with ZKP | Active feasibility audit: verified Circom/Noir proof comparison, TrustBOM real-receipt reproduction with negative controls; novelty unestablished |
-| [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Proposed |
+| [segmentation-semantics-rollback](https://github.com/ezekielologunde/segmentation-semantics-rollback) | Segmentation semantics and rollback | Verified bounded measurement defect; engineering result preserved; novelty-focused manuscript deprioritized |
 | [remediation-evidence-interfaces](https://github.com/ezekielologunde/remediation-evidence-interfaces) | Evidence-age interfaces for remediation approval | Reserve |
 | [federated-unlearning-rare-classes](https://github.com/ezekielologunde/federated-unlearning-rare-classes) | Federated unlearning of single-source attack classes | On hold: literature overlap |
 | [ai-agent-offboarding-security](https://github.com/ezekielologunde/ai-agent-offboarding-security) | Ai Agent Offboarding Security | Existing private repository; requires owner access |
 | [ai-model-provenance-consistency](https://github.com/ezekielologunde/ai-model-provenance-consistency) | Ai Model Provenance Consistency | Existing private repository; requires owner access |
-| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure Ai Memory Deletion | Existing private repository; requires owner access |
+| [secure-ai-memory-deletion](https://github.com/ezekielologunde/secure-ai-memory-deletion) | Secure AI Memory Deletion | Existing controlled study accessed; incomplete-provenance extension under literature screening; no new novelty claim |
 
 ## Additional proposed research topics
 
@@ -51,7 +51,7 @@ The first eight entries come from the October 4, 2026 independent research portf
 
 These deposits supplement the original 85-entry inventory snapshot. They do not establish peer review, journal acceptance or exclusive novelty. Closest-work full-method access remains unresolved for parts of the Confidence literature review.
 
-Next research gate: resume the computational policy-repair literature review in `remediation-evidence-interfaces`. Its human-study route remains on hold and its synthetic audit is feasibility infrastructure only. Establish a defensible closest-work gap, baselines and rejection criteria before additional experiments or HPC allocation.
+Current research gate (October 13): inspect the incomplete-provenance extension in `secure-ai-memory-deletion/outputs/extension-screening-2026-10-13.json`. The existing memory study is preserved, not restarted. Compare database deletion-propagation methods and native agent-memory contracts before any extension experiments or HPC allocation. The earlier policy-repair route remains historical context.
 
 ## Auditor preprint deposit, October 13, 2026
 
