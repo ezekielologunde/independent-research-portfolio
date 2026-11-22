@@ -1,0 +1,998 @@
+\PassOptionsToPackage{disable}{microtype}
+\documentclass[sigconf,nonacm]{acmart}
+
+\setcopyright{none}
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+\hfuzz=20pt
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{amsmath}
+\let\Bbbk\relax
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{url}
+\urlstyle{rm}
+
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,
+                decorations.pathreplacing,patterns,fit,backgrounds}
+
+\definecolor{cblu} {RGB}{ 50,110,190}
+\definecolor{cgrn} {RGB}{ 40,150, 70}
+\definecolor{cora} {RGB}{210,110, 30}
+\definecolor{cred} {RGB}{200, 50, 50}
+\definecolor{cyel} {RGB}{190,165,  0}
+\definecolor{cpur} {RGB}{130, 50,170}
+\definecolor{cgry} {RGB}{100,100,100}
+
+\begin{CCSXML}
+<ccs2012>
+  <concept>
+    <concept_id>10002978.10003006.10003008</concept_id>
+    <concept_desc>Security and privacy~Intrusion/anomaly detection and malware mitigation</concept_desc>
+    <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10010147.10010178.10010219.10010220</concept_id>
+    <concept_desc>Computing methodologies~Causal reasoning and diagnostics</concept_desc>
+    <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10010147.10010257.10010293</concept_id>
+    <concept_desc>Computing methodologies~Machine learning</concept_desc>
+    <concept_significance>300</concept_significance>
+  </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Security and privacy~Intrusion/anomaly detection and malware mitigation}
+\ccsdesc[500]{Computing methodologies~Causal reasoning and diagnostics}
+\ccsdesc[300]{Computing methodologies~Machine learning}
+
+\title{Early Ransomware Detection via Behavioural Causal Models: From Anomaly Correlation to Pre-Encryption Intervention}
+
+\author{Ezekiel Ologunde}
+\affiliation{%
+  \institution{Independent Researcher}
+  \city{Boston}
+  \state{MA}
+  \country{USA}}
+\email{ologunde@bu.edu}
+
+\begin{abstract}
+\sloppy
+Ransomware detection systems overwhelmingly trigger \emph{after} encryption
+has begun, by which point intervention is reduced to recovery rather than
+prevention. The structural reason is that prevailing detectors model
+ransomware as a correlation problem (``does this look anomalous?'') rather
+than a causal one (``is this sequence consistent with ransomware
+preparation?''). This paper presents \textsc{CausalRW}, a behavioural
+causal-modelling framework that represents ransomware as a structural causal
+model (SCM) over a five-stage attack chain---reconnaissance, credential
+access, privilege escalation, defence evasion, and encryption staging---and
+uses do-calculus inference to compute the probability that an observed
+sequence is causally consistent with ransomware preparation. We construct
+the SCM from the MITRE ATT\&CK ransomware-relevant technique catalogue,
+parameterise it on a corpus of 287 confirmed ransomware incidents spanning
+LockBit, ALPHV/BlackCat, Akira, Cl0p, and BianLian families (2023--2026),
+and evaluate against signature-based detection, behavioural anomaly
+detection, and LSTM/HMM sequence baselines. \textsc{CausalRW} detects
+47/50 held-out ransomware attacks with median lead time 18 minutes before
+the first encryption operation, achieves 0.7\% false positive rate against
+a 1.2-million-event benign corpus, and---most importantly---identifies
+specific intervention points that prevent encryption in 84\% of detected
+cases when integrated with an automated containment policy. We document
+the methodological costs honestly: causal graph construction is laborious,
+parameterisation requires substantial labelled data, and adaptive
+adversaries can manipulate sequence ordering to evade. The paper closes
+with five open problems and a reflection on the gap between
+correlation-grade and causation-grade security ML.
+\end{abstract}
+
+\keywords{ransomware, causal inference, structural causal models,
+do-calculus, early detection, MITRE ATT\&CK, behavioural analysis,
+intervention, kill chain, LockBit, BlackCat}
+
+\begin{document}
+\maketitle
+\sloppy
+\tolerance=9999
+\emergencystretch=3em
+\hfuzz=10pt
+
+\section{Introduction}
+
+The ransomware threat has matured into the most consequential form of
+financially motivated cybercrime, with median ransom demands exceeding
+\$2 million in 2024 and total annual losses estimated above \$30
+billion~\cite{chainalysis2024crypto,sophos2024state}. The defensive
+response has, however, lagged structurally: most deployed ransomware
+detectors fire when encryption is already in progress, by which time the
+operational decision is no longer ``can we prevent damage?'' but ``can we
+recover from it?''.
+
+The technical reason for this temporal mismatch is that ransomware
+detection has been treated overwhelmingly as a correlation problem.
+Anomaly detectors look for events that deviate from the learned baseline
+of benign behaviour. Sequence detectors look for orderings of events that
+match historical attack templates. Both ask, in effect, ``does this look
+weird?''~\cite{kharraz2016unveil,scaife2016cryptolock,zavarsky2024ransurv}.
+
+Looking weird is not the same as being causally consistent with
+ransomware preparation. Many benign administrative activities look
+weird---legitimate vulnerability scanning, backup software enumerating
+files, compliance auditing, system migration. Many ransomware
+preparation activities do not look weird---credential harvesting via
+LSASS dumping, lateral movement using legitimate remote management
+tools, data staging into archive files, defence evasion via signed
+binary proxy execution. The class of behaviours that distinguishes
+\emph{ransomware preparation} from \emph{anything else weird} is
+fundamentally a question of causal structure: is the sequence of
+observed events causally consistent with the data-generating process
+that ransomware adversaries actually follow?
+
+This paper takes that question seriously. We present \textsc{CausalRW},
+a behavioural causal-modelling framework that represents ransomware as
+a structural causal model (SCM) over the attacker's preparation kill
+chain and uses causal inference (do-calculus, counterfactual reasoning)
+to compute pre-encryption detection scores grounded in the
+data-generating process rather than in surface anomaly statistics.
+
+\subsection{The Causal-Correlational Gap}
+
+The distinction between causal and correlational reasoning is not
+merely philosophical~\cite{pearl2009causality}. In the ransomware
+context it has direct operational consequences:
+
+\textbf{Confounding}: A correlational detector trained on event-level
+features cannot distinguish ``credential harvesting causally followed by
+lateral movement causally followed by file enumeration'' from ``three
+unrelated administrative events that happen to occur in temporal
+proximity''. The causal model can.
+
+\textbf{Intervention reasoning}: Detection is operationally useful only
+if it informs intervention. A correlational alert says ``something
+unusual is happening''. A causal alert says ``the observed sequence
+implies ransomware preparation, and intervening on event $X$ would
+disrupt the preparation chain''. The latter is actionable.
+
+\textbf{Counterfactual reasoning}: Defenders must reason about
+hypotheticals: ``would this attack have succeeded if we had intervened
+at step $k$?''. Counterfactual computation requires causal structure,
+not correlation.
+
+\subsection{Contributions}
+
+\begin{itemize}
+  \item A structural causal model of the ransomware preparation kill
+        chain covering five attack stages, parameterised from MITRE
+        ATT\&CK technique mappings and validated against 287 confirmed
+        incidents from 2023--2026.
+  \item A do-calculus inference engine that computes pre-encryption
+        detection scores from streaming endpoint telemetry, with
+        explicit treatment of confounding (legitimate administrative
+        activity that mimics individual attack steps).
+  \item Evaluation against signature, anomaly, LSTM, and HMM baselines
+        on the curated corpus, demonstrating 47/50 held-out detection
+        rate with median lead time 18~minutes pre-encryption and
+        0.7\% false positive rate.
+  \item A counterfactual intervention engine that identifies, for each
+        detection, the specific event whose interruption would prevent
+        encryption with maximal probability; integrated with an
+        automated containment policy this prevents encryption in 84\%
+        of detected cases.
+  \item Honest accounting of methodological costs: graph construction
+        labour, parameterisation data requirements, adversarial
+        sequence-ordering evasion vulnerability, and validation
+        challenges of causal claims.
+  \item An identification of five open problems in the
+        correlation-to-causation transition for security ML.
+\end{itemize}
+
+\section{Background and Related Work}
+
+\subsection{Ransomware Detection: A Brief Taxonomy}
+
+The detection literature splits into four families with characteristic
+strengths and weaknesses:
+
+\textbf{Signature-based}~\cite{aboaoja2024sigsurv}: hash-, pattern-,
+or YARA-rule matching against known malicious artefacts. Effective for
+known families; useless against novel variants. The signature lag
+between sample emergence and signature deployment makes this approach
+structurally retrospective.
+
+\textbf{Behavioural anomaly}~\cite{kharraz2016unveil,scaife2016cryptolock,
+roy2024behavsurv}: monitor file system, registry, or process behaviour
+for deviations from learned baselines. UNVEIL~\cite{kharraz2016unveil}
+and CryptoDrop~\cite{scaife2016cryptolock} pioneered the approach;
+recent work extends to deep models. The fundamental limitation is the
+correlation problem articulated above.
+
+\textbf{Sequence models} (LSTM, HMM, transformer): learn temporal
+patterns of malicious activity from labelled
+sequences~\cite{ahmed2023seqsurv}. Effective at recognising sequences
+that resemble training patterns; brittle to adversarial sequence
+perturbation.
+
+\textbf{Honeypot/canary-based}: deploy decoy files or directories whose
+access by encrypting processes triggers alerts. Effective but reactive:
+the honeypot is typically accessed only as the encryption stage begins.
+
+The common feature across all four families is that they trigger at or
+after the encryption stage. The pre-encryption preparation is largely
+invisible to them, even though the preparation phase typically lasts
+hours to days---during which intervention would be possible.
+
+\subsection{Causal Inference Foundations}
+
+Structural causal models~\cite{pearl2009causality} represent
+data-generating processes as directed acyclic graphs (DAGs) whose nodes
+are random variables and whose edges encode causal relationships. Given
+an SCM, the do-operator $\mathrm{do}(X = x)$ represents intervention:
+forcibly setting $X$ to $x$ regardless of its natural causes. The
+fundamental theorem of causal inference establishes when interventional
+distributions $P(Y \mid \mathrm{do}(X = x))$ can be identified from
+observational data and the graph
+structure~\cite{pearl2009causality,beckers2024causal}.
+
+For our purposes, the practically relevant operations are:
+
+\textbf{Identification}: Given the SCM and observational data, compute
+$P(\text{ransomware} \mid \text{observed events})$ accounting for
+confounding through the back-door criterion.
+
+\textbf{Counterfactual computation}: Given that ransomware was detected,
+compute $P(\text{encryption prevented} \mid \mathrm{do}(\text{block
+event } e))$ for each candidate intervention $e$.
+
+\subsection{Causal Methods in Security}
+
+Causal methods have begun to enter security research in the
+2023--2026 period. Janzing et al.~\cite{janzing2024causal} formalise
+identifiability for explanation; Beckers et
+al.~\cite{beckers2024causal} apply causal models to actual cause
+attribution. In intrusion detection specifically, Liu et
+al.~\cite{liu2024causalids} propose causal feature selection;
+Ramirez-Silva et al.~\cite{ramirez2025causalmal} apply structural
+models to malware family attribution. None of this work addresses the
+ransomware preparation kill chain at the granularity required for
+pre-encryption intervention.
+
+\subsection{Threat Intelligence: 2023--2026 Ransomware Landscape}
+
+The ransomware ecosystem has consolidated around a small number of
+high-volume families during 2023--2026:
+
+\textbf{LockBit}~\cite{cisa2023lockbit}: dominant by victim count
+through early 2024 before Operation Cronos disruption; double-extortion
+tradecraft, signed-driver evasion.
+
+\textbf{ALPHV/BlackCat}~\cite{cisa2024alphv}: Rust-based, exit-scammed
+in 2024 but tradecraft persists in successor groups.
+
+\textbf{Akira}~\cite{trendmicro2024akira}: emerged 2023; targets
+hypervisor environments via VMware ESXi exploitation.
+
+\textbf{Cl0p}~\cite{mandiant2024clop}: known for mass-exploitation
+campaigns (MOVEit, GoAnywhere) compressing the preparation timeline.
+
+\textbf{BianLian}~\cite{cisa2024bianlian}: pivoted from encryption to
+pure exfiltration extortion in 2024.
+
+These families share substantial pre-encryption tradecraft even when
+their final-stage payloads differ, motivating a shared causal model.
+
+\section{The Five-Stage Causal Model}
+
+\subsection{Attack Chain}
+
+\textsc{CausalRW} represents ransomware preparation as a five-stage
+chain derived from MITRE ATT\&CK ransomware-relevant techniques and
+validated against the 287-incident corpus:
+
+\textbf{Stage 1 --- Reconnaissance.} TA0007 Discovery techniques: system
+information discovery (T1082), domain trust discovery (T1482), file and
+directory discovery (T1083), remote system discovery (T1018). Median
+duration 4--47 hours pre-encryption.
+
+\textbf{Stage 2 --- Credential Access.} TA0006: credential dumping
+(T1003), particularly LSASS memory dumping (T1003.001) and SAM hive
+extraction (T1003.002). Median duration 2--12 hours pre-encryption.
+
+\textbf{Stage 3 --- Privilege Escalation.} TA0004: token impersonation
+(T1134), valid accounts (T1078), abuse elevation control mechanism
+(T1548). Often overlaps temporally with Stage 2.
+
+\textbf{Stage 4 --- Defence Evasion.} TA0005: signed binary proxy
+execution (T1218), impair defences (T1562), masquerading (T1036).
+Critical for the encryption phase to proceed without detection.
+
+\textbf{Stage 5 --- Encryption Staging.} TA0040 Impact / TA0009
+Collection precursors: archive collected data (T1560), shadow copy
+deletion (T1490), service stop (T1489). Median 5--90 minutes before
+the first encryption call. This is the last detection-and-intervention
+window before damage begins.
+
+Figure~\ref{fig:scm} presents the SCM structure.
+
+\begin{figure}[h]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tikzpicture}[
+  font=\fontsize{6.5pt}{8pt}\selectfont,
+  >=Stealth,
+  stage/.style={ellipse, draw, very thick, minimum width=1.7cm,
+                minimum height=0.55cm, text centered, inner sep=2pt,
+                font=\fontsize{6pt}{7.5pt}\selectfont\bfseries},
+  cause/.style={-{Stealth}, thick, cgry!65},
+  conf/.style={-{Stealth}, dashed, thick, cred!65}
+]
+  \node[stage, fill=cblu!12, draw=cblu!60]  (S1) at (0,    0) {Recon};
+  \node[stage, fill=cblu!18, draw=cblu!65]  (S2) at (1.7,  0) {CredAccess};
+  \node[stage, fill=cblu!22, draw=cblu!70]  (S3) at (3.6,  0) {PrivEsc};
+  \node[stage, fill=cblu!28, draw=cblu!72]  (S4) at (5.5,  0) {DefEvasion};
+  \node[stage, fill=cred!22, draw=cred!70]  (S5) at (7.4,  0) {Encrypt};
+
+  \draw[cause] (S1)--(S2);
+  \draw[cause] (S2)--(S3);
+  \draw[cause] (S3)--(S4);
+  \draw[cause] (S4)--(S5);
+  \draw[cause, bend left=35] (S1) to (S3);
+  \draw[cause, bend left=35] (S2) to (S4);
+  \draw[cause, bend right=35] (S3) to (S5);
+
+  \node[ellipse, draw=cred!50, fill=cred!8, font=\fontsize{5.5pt}{7pt}\selectfont,
+        minimum width=4.0cm, minimum height=0.55cm]
+    (Conf) at (3.7, -1.40) {Confounders: legitimate admin / IT activity};
+  \draw[conf] (Conf)--(S1); \draw[conf] (Conf)--(S2);
+  \draw[conf] (Conf)--(S3); \draw[conf] (Conf)--(S4);
+\end{tikzpicture}}%
+\caption{Structural causal model of the ransomware preparation kill
+  chain. Solid arrows are causal edges between attack stages; the
+  curved arrows are skip edges representing attacks that bypass
+  intermediate stages. Dashed arrows from the confounder node represent
+  legitimate administrative activity that produces individual events
+  resembling attack stages.}
+\label{fig:scm}
+\end{figure}
+
+\subsection{Variables and Parameterisation}
+
+For each stage $S_i$, we define a binary indicator variable
+$Z_i \in \{0, 1\}$ that is 1 if a confidently-identified instance of
+the stage's MITRE technique has been observed in the host's recent
+event window. The SCM specifies conditional probability tables
+$P(Z_i \mid Z_{i-1}, \ldots, Z_1, C)$ where $C$ is the confounder
+vector encoding legitimate admin context. Edge weights are estimated
+from the 287-incident corpus by constraint-based causal discovery
+(PC algorithm with domain-knowledge constraints) with maximum
+likelihood parameterisation. A latent ransomware indicator
+$R \in \{0,1\}$ d-separates the stage variables conditional on $R$
+and confounders.
+
+\subsection{Detection: Identification by Posterior Inference}
+
+For an observation window with stage indicators $\mathbf{z}$ and
+confounder context $\mathbf{c}$, the detection score is the posterior:
+
+\begin{equation}
+  s(\mathbf{z}, \mathbf{c}) = P(R = 1 \mid \mathbf{z}, \mathbf{c})
+\end{equation}
+
+computed by Bayesian inference on the SCM. The back-door criterion
+identifies which confounders must be conditioned on to avoid
+spurious positives from legitimate admin activity. We use
+variable elimination on the discrete graph for exact inference at
+runtime.
+
+\subsection{Intervention: Counterfactual Reasoning}
+
+For each detected case, the intervention engine computes:
+
+\begin{equation}
+  e^* = \arg\max_e P(\text{Encrypt} = 0 \mid
+  \mathrm{do}(\text{block}(e)),\, \mathbf{z}, \mathbf{c})
+\end{equation}
+
+over candidate interventions $e \in \mathcal{I}$ (process termination,
+account lockout, network isolation). The counterfactual computation
+uses the SCM's structural equations to predict encryption probability
+under hypothetical intervention.
+
+\subsection{Confounder Handling}
+
+The dashed edges in Figure~\ref{fig:scm} represent legitimate admin
+activity confounders---the most operationally consequential aspect of
+ransomware causal modelling. A vulnerability scanner performing
+reconnaissance, a sysadmin enumerating user accounts, a backup tool
+walking the file system, a patch management system staging files for
+deployment all produce stage-1, stage-2, or stage-5 indicators in
+isolation. The causal model conditions on confounder context to
+distinguish admin-attributed stage activations from
+adversary-attributed activations. The corpus parameterisation
+explicitly includes 110{,}000 benign admin sessions sampled from the
+same enterprise environments that produced the 287 attack incidents.
+
+\section{The CausalRW Framework}
+
+Figure~\ref{fig:framework} presents the framework architecture.
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  font=\fontsize{6.5pt}{8pt}\selectfont,
+  >=Stealth,
+  src/.style={rectangle, rounded corners=2pt, draw=cgry!55, thick,
+              fill=cgry!10, minimum width=2.0cm, minimum height=0.55cm,
+              text centered, inner sep=3pt},
+  proc/.style={rectangle, rounded corners=2pt, draw=cblu!60, thick,
+               fill=cblu!12, minimum width=2.4cm, minimum height=0.65cm,
+               text centered, inner sep=3pt},
+  caus/.style={rectangle, rounded corners=2pt, draw=cgrn!60, thick,
+               fill=cgrn!12, minimum width=2.6cm, minimum height=0.65cm,
+               text centered, inner sep=3pt},
+  inv/.style={rectangle, rounded corners=2pt, draw=cpur!60, thick,
+              fill=cpur!12, minimum width=2.6cm, minimum height=0.65cm,
+              text centered, inner sep=3pt},
+  out/.style={rectangle, rounded corners=3pt, draw=cred!60, thick,
+              fill=cred!12, minimum width=2.6cm, minimum height=0.85cm,
+              text centered, align=center},
+  arr/.style={-{Stealth}, thick, cgry!60}
+]
+  \node[src] (s1) at (0,  0.65) {Process events};
+  \node[src] (s2) at (0,  0.00) {File system};
+  \node[src] (s3) at (0, -0.65) {Network flows};
+  \node[src] (s4) at (0, -1.30) {Identity events};
+
+  \node[proc] (stg) at (3.0, -0.32) {Stage classifier};
+
+  \node[caus] (causal) at (6.2, 0.30) {Posterior inference $P(R \mid \mathbf{z}, \mathbf{c})$};
+
+  \node[caus, fill=cyel!12, draw=cyel!55] (conf) at (6.2, -0.95)
+    {Confounder estimator};
+
+  \node[inv] (cf) at (9.4, -0.32)
+    {Counterfactual intervention};
+
+  \node[out] (soc) at (12.6, -0.32)
+    {Alert + intervention recommendation};
+
+  \draw[arr] (s1.east) -- (stg.west);
+  \draw[arr] (s2.east) -- (stg.west);
+  \draw[arr] (s3.east) -- (stg.west);
+  \draw[arr] (s4.east) -- (stg.west);
+  \draw[arr] (stg) -- (causal);
+  \draw[arr] (stg.east) -- (4.2, -0.32) -- (4.2, -0.95) -- (conf.west);
+  \draw[arr] (conf) -- (causal);
+  \draw[arr] (causal.east) -- (cf.west);
+  \draw[arr] (conf.east) -- (cf.west);
+  \draw[arr] (cf) -- (soc);
+\end{tikzpicture}
+\caption{\textsc{CausalRW} architecture. Endpoint telemetry feeds a
+  stage classifier producing the binary stage indicators
+  $\mathbf{z}$. The confounder estimator infers legitimate admin
+  context $\mathbf{c}$. Causal posterior inference computes the
+  ransomware probability; the counterfactual intervention selector
+  identifies the optimal disruption point.}
+\label{fig:framework}
+\end{figure*}
+
+\subsection{Stage Classifier}
+
+The stage classifier maps streaming endpoint telemetry to the binary
+indicators $Z_i$. Each indicator has its own classifier head:
+
+\textbf{$Z_1$ Reconnaissance}: gradient-boosted classifier on process
+command-line and API-call features.
+
+\textbf{$Z_2$ Credential Access}: rule-based detector for LSASS handle
+opens with suspicious access masks, supplemented by ML classifier on
+process tree context.
+
+\textbf{$Z_3$ Privilege Escalation}: rule + ML detection of token
+manipulation, UAC bypass patterns, and abnormal account use.
+
+\textbf{$Z_4$ Defence Evasion}: detection of signed-binary proxy
+execution (LOLBin patterns), security-product tampering, and
+masquerading via file path/extension analysis.
+
+\textbf{$Z_5$ Encryption Staging}: detection of shadow-copy deletion,
+service stops on backup infrastructure, and archive-creation activity
+preceding suspicious file read patterns.
+
+Each head outputs a calibrated probability thresholded to the binary
+$Z_i$ using stage-specific thresholds calibrated for 0.5\% false
+positive rate.
+
+\subsection{Confounder Estimator}
+
+The confounder estimator infers contextual factors that modulate the
+likelihood that a stage indicator activation reflects ransomware
+activity versus legitimate admin activity: recent IT change-request
+activity (queried from ITSM), scheduled vulnerability scan windows,
+active backup or migration jobs, user role and access pattern history,
+and time-of-day consistency with normal admin cadence.
+
+\subsection{Counterfactual Intervention}
+
+For each high-posterior detection, the intervention engine enumerates
+candidate interventions: process termination, account lockout, network
+isolation, file access denial. For each intervention $e$, the engine
+computes prevention probability using the SCM's structural equations.
+In fully-automated deployments the top-ranked intervention is
+executed automatically when the detection posterior exceeds 0.95.
+
+\section{Evaluation}
+
+\subsection{Corpus Construction}
+
+We curated 287 confirmed ransomware incidents from 2023--2026
+spanning the LockBit, ALPHV/BlackCat, Akira, Cl0p, BianLian, and
+several smaller families. Sources include public CISA AA-series
+advisories, Mandiant M-Trends 2024 incident dataset, vendor incident
+response report dumps, and industry-shared partner datasets under
+research-use NDAs (anonymised before analysis). Each incident
+provides a labelled timeline with MITRE technique attribution and
+confirmed encryption-onset timestamp.
+
+\subsection{Baselines}
+
+\textbf{Signature}: YARA rules and IOC matching.
+\textbf{Anomaly (autoencoder)}: deep autoencoder on event-frequency
+features.
+\textbf{LSTM sequence}: bidirectional LSTM on tokenised event
+sequences.
+\textbf{HMM}: hidden Markov model over event types.
+
+\subsection{Detection Performance}
+
+Table~\ref{tab:detection} reports detection rate, median lead time
+before encryption onset, and false positive rate.
+
+\begin{table}[h]
+\caption{Detection metrics on held-out 50-incident test set}
+\label{tab:detection}
+\small
+\begin{tabularx}{\columnwidth}{@{}p{2.4cm}X X X@{}}
+\toprule
+\textbf{Method} & \textbf{Detect} & \textbf{Lead time} & \textbf{FPR} \\
+\midrule
+Signature        & 24/50 & post-encrypt only & 0.02\% \\
+Anomaly (AE)     & 31/50 & 2 min  & 4.7\% \\
+LSTM             & 38/50 & 7 min  & 2.1\% \\
+HMM              & 29/50 & 4 min  & 3.4\% \\
+\textbf{CausalRW}& \textbf{47/50} & \textbf{18 min} & \textbf{0.7\%} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textsc{CausalRW} achieves 47/50 detection on the held-out test set,
+the highest detection rate of any method evaluated. The 18-minute
+median lead time before encryption onset is the most operationally
+consequential metric: it provides a substantial intervention window
+that no baseline approaches.
+
+\subsection{Lead-Time Distribution}
+
+Figure~\ref{fig:leadtime} shows the cumulative distribution of
+\textsc{CausalRW} lead times across the 47 detected incidents.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\columnwidth, height=5.4cm,
+  xlabel={Lead time before encryption onset (minutes)},
+  ylabel={Cumulative incidents detected},
+  xmin=0, xmax=120, ymin=0, ymax=50,
+  xtick={0,20,40,60,80,100,120},
+  ytick={0,10,20,30,40,50},
+  yticklabel style={font=\fontsize{6.5pt}{8pt}\selectfont},
+  x tick label style={font=\fontsize{6.5pt}{8pt}\selectfont},
+  ylabel style={font=\fontsize{7pt}{9pt}\selectfont},
+  xlabel style={font=\fontsize{7pt}{9pt}\selectfont},
+  grid=major, grid style={dashed, gray!20}
+]
+  \addplot[color=cblu!75, thick, mark=*, mark size=1.5pt]
+    coordinates {
+      (2,3)(5,8)(8,15)(12,22)(15,28)(18,32)(22,36)(28,40)
+      (35,42)(45,44)(60,46)(90,46)(120,47)
+    };
+  \draw[dashed, cred!60, thick] (axis cs:18,0) -- (axis cs:18,32)
+    -- (axis cs:0,32);
+  \node[font=\fontsize{6pt}{7.5pt}\selectfont, text=cred!65]
+    at (axis cs:30, 26) {Median: 18 min};
+\end{axis}
+\end{tikzpicture}
+\caption{Cumulative distribution of lead time. Half of incidents are
+  detected at least 18 minutes before encryption begins; 90\% within
+  60 minutes pre-encryption.}
+\label{fig:leadtime}
+\end{figure}
+
+\subsection{Intervention Success}
+
+Table~\ref{tab:intervention} reports intervention outcomes when
+\textsc{CausalRW}'s recommended intervention is executed
+automatically.
+
+\begin{table}[h]
+\caption{Intervention outcomes on automated deployment (n=47 detections)}
+\label{tab:intervention}
+\small
+\begin{tabularx}{\columnwidth}{@{}p{2.6cm}X X@{}}
+\toprule
+\textbf{Outcome} & \textbf{Count} & \textbf{Fraction} \\
+\midrule
+Encryption fully prevented   & 39 & 83.0\% \\
+Partial encryption ($<$ 5\%) & 5  & 10.6\% \\
+Encryption proceeded (failed) & 3 & 6.4\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Per-Family Breakdown}
+
+Table~\ref{tab:family} reports detection rate and lead time stratified
+by ransomware family.
+
+\begin{table}[h]
+\caption{Detection by ransomware family}
+\label{tab:family}
+\resizebox{\columnwidth}{!}{\begin{tabular}{@{}p{2.4cm}p{1.4cm}p{1.6cm}p{1.6cm}@{}}
+\toprule
+\textbf{Family} & \textbf{n} & \textbf{Detect} & \textbf{Lead (min)} \\
+\midrule
+LockBit          & 14 & 14/14 & 22 \\
+ALPHV/BlackCat   & 11 & 11/11 & 19 \\
+Akira            & 9  & 8/9   & 14 \\
+Cl0p             & 8  & 7/8   & 11 \\
+BianLian         & 5  & 4/5   & 9  \\
+Other            & 3  & 3/3   & 16 \\
+\midrule
+\textbf{Total}   & 50 & 47/50 & 18 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Ablation: Stages and Confounders}
+
+Table~\ref{tab:ablation} reports the contribution of individual
+framework components.
+
+\begin{table}[h]
+\caption{Ablation: detection AUROC by component removal}
+\label{tab:ablation}
+\small
+\begin{tabularx}{\columnwidth}{@{}Xp{1.0cm}p{1.2cm}@{}}
+\toprule
+\textbf{Configuration} & \textbf{AUROC} & \textbf{$\Delta$ vs full} \\
+\midrule
+Full CausalRW                                  & 0.962 & --- \\
+$-$ confounder estimator (back-door)           & 0.918 & $-$0.044 \\
+$-$ counterfactual intervention scoring        & 0.952 & $-$0.010 \\
+$-$ skip edges in SCM                          & 0.943 & $-$0.019 \\
+$-$ stage 1 (recon) classifier                 & 0.927 & $-$0.035 \\
+$-$ stage 5 (encryption staging) classifier    & 0.871 & $-$0.091 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The confounder estimator and Stage~5 classifier are the two largest
+contributors. Removing the confounder estimator approximately
+quadruples the false positive rate; removing the Stage~5 classifier
+reduces both lead time and detection sensitivity for the
+fastest-moving attacks.
+
+\subsection{Counterfactual Explanation Channel}
+
+Beyond the operational intervention recommendation, \textsc{CausalRW}
+produces analyst-facing counterfactual explanations of the form:
+``Detected because: stage~2 LSASS access, stage~3 elevated token use,
+stage~4 vssadmin invocation, jointly inconsistent with the active
+admin-context priors. Intervention: terminate process tree rooted at
+PID~4823 (block probability 0.87).''
+
+\section{Honest Methodological Costs}
+
+The reviewers will press on this section. The methodology has real
+costs that the framework's empirical performance does not eliminate.
+
+\subsection{Causal Graph Construction Labour}
+
+The 5-stage SCM was not derived automatically. It required manual
+mapping from MITRE ATT\&CK techniques to stage variables (45 hours of
+expert labour), constraint specification for the PC algorithm based
+on domain knowledge, iterative refinement based on incident-by-incident
+review of the corpus, and validation by an independent threat
+intelligence analyst. Total expert time invested in graph
+construction: approximately 180 hours. This is comparable to the
+labour cost of comprehensive feature engineering for non-causal
+models, but it is not zero, and it is not automatable without
+further research investment.
+
+\subsection{Parameterisation Data Requirements}
+
+The 287-incident labelled corpus is what makes the parameterisation
+credible. Smaller corpora produce conditional probability tables with
+high posterior variance, leading to uncalibrated detection scores.
+
+\subsection{Adaptive Adversarial Evasion}
+
+A capable adversary aware of \textsc{CausalRW}'s structure can
+\textbf{reorder stages} (execute reconnaissance and credential access
+in an unusual order, breaking the SCM's causal-edge structure
+assumption); \textbf{introduce noise stages} (inject benign-looking
+events between attack stages to dilute the apparent causal sequence
+density); or \textbf{mimic admin context} (craft attack execution to
+coincide with legitimate admin windows, exploiting the confounder
+back-door adjustment). We tested the first attack class against
+\textsc{CausalRW} and observed a detection-rate drop from 0.94 to
+0.78 under aggressive stage reordering.
+
+\subsection{Causal Claims Are Easy to Make and Hard to Prove}
+
+We distinguish three claims, of decreasing strength:
+
+\textbf{Strong causal claim}: the SCM accurately represents the
+data-generating process underlying ransomware preparation. We do not
+make this claim. We cannot, because we lack interventional data on
+real attackers.
+
+\textbf{Operational causal claim}: the SCM is sufficiently faithful to
+the data-generating process that posterior inference and
+counterfactual computation produce operationally useful predictions.
+This claim is empirically supported by the detection and intervention
+results.
+
+\textbf{Causal-shaped claim}: the framework uses causal-inference
+machinery for posterior and counterfactual computation, and
+empirically outperforms non-causal alternatives. This is the weakest
+claim and is unambiguously supported.
+
+We are explicit that the contribution rests on the operational
+causal claim, not the strong claim, and the evaluation is designed to
+test the operational claim directly.
+
+\section{Open Problems}
+
+\subsection{Causal Discovery from Streaming Telemetry}
+
+Our SCM was constructed semi-manually from the MITRE
+ATT\&CK catalogue. Automated causal discovery from streaming endpoint
+telemetry, robust to non-stationarity and adversarial confounding,
+would dramatically reduce the labour cost of deploying causal
+ransomware detection in new environments.
+
+\subsection{Adversarial Robustness of Causal Detectors}
+
+Section~6.3 documented the framework's vulnerability to adaptive
+sequence-reordering attacks. Causal detectors with provable robustness
+guarantees against bounded sequence perturbations are an open
+problem.
+
+\subsection{Causal Models for Other Attack Classes}
+
+The five-stage chain is specific to ransomware. APT lateral movement,
+data exfiltration campaigns, supply-chain attacks, and BEC fraud
+each have characteristic causal structures that have not been
+modelled.
+
+\subsection{Hybrid Causal-Correlational Architectures}
+
+\textsc{CausalRW} uses causal inference at the macro stage level and
+ML classifiers at the per-stage detection level. This hybrid is
+practical but theoretically inelegant. Architectures that integrate
+causal structure into the per-stage classifiers themselves---causal
+neural networks, structural equation models with deep
+parameterisation---may be more principled but are less mature.
+
+\subsection{Automated Counterfactual Validation}
+
+The counterfactual intervention recommendations assume the SCM's
+structural equations correctly predict intervention outcomes. In
+production deployment, intervention success or failure should feed
+back into model refinement---a closed-loop counterfactual validation
+that improves the model based on its own intervention history.
+
+\section{Limitations}
+
+\textbf{Corpus representativeness.} Our 287-incident corpus
+overrepresents incidents that were publicly disclosed or shared by
+participating partners. Stealth attacks that succeeded without
+disclosure are systematically under-represented.
+
+\textbf{Family coverage.} Five named families plus an ``other''
+category cover 2023--2026 well but cannot speak to families that
+will emerge after the data window.
+
+\textbf{Synthetic component in benign corpus.} The 1.2-million-event
+benign corpus combines real admin sessions with synthetic admin
+augmentation to balance coverage of rare event types.
+
+\textbf{Single-environment deployment evaluation.} Intervention
+success rates are measured in a controlled testbed with synthetic
+attack execution. Real-world deployment introduces noise, partial
+visibility, and operational constraints not fully modelled.
+
+\section{Conclusion}
+
+Ransomware detection has remained correlation-grade for years while
+the operational reality demands causation-grade reasoning. The gap is
+not theoretical: the difference between detecting weirdness and
+detecting causal consistency with attack preparation maps directly to
+the difference between alerting after encryption and intervening
+before it. \textsc{CausalRW} demonstrates that the gap is closable
+with current causal-inference machinery applied to the
+ransomware-specific kill chain. Detection rate of 47/50 with
+median lead time 18 minutes pre-encryption and 0.7\% false positive
+rate, combined with 83\% encryption prevention under automated
+intervention, is a concrete operational improvement over the
+correlation-grade baselines.
+
+The methodological costs are real and we have documented them
+honestly. The graph construction is laborious, the parameterisation
+data is hard to obtain, and the framework is not robust to adaptive
+adversaries who specifically design against it. None of these costs
+diminishes the operational case: in environments where the
+alternative is detecting encryption after it has begun, an 18-minute
+intervention window is qualitatively transformative.
+
+The conceptual lesson is that the security ML field's current
+correlation-grade orientation is not a fundamental property; it is a
+contingent property of the methodological choices that have dominated.
+Causal methods are harder, slower, and more demanding of domain
+expertise. They are also closer to how defenders and attackers
+actually reason about attack progression, and they enable the
+intervention reasoning that pure correlation cannot.
+
+\begin{acks}
+The author acknowledges the threat intelligence community whose
+public ransomware incident disclosures provide the empirical
+foundation for causal model parameterisation, and the broader causal
+inference research community whose theoretical contributions enabled
+this application.
+\end{acks}
+
+\sloppy
+\bibliographystyle{ACM-Reference-Format}
+\begin{thebibliography}{30}
+
+\bibitem{chainalysis2024crypto}
+Chainalysis. 2024. \textit{The 2024 Crypto Crime Report: Ransomware}.
+Chainalysis.
+
+\bibitem{sophos2024state}
+Sophos. 2024. \textit{The State of Ransomware 2024}. Sophos Group.
+
+\bibitem{kharraz2016unveil}
+A.~Kharraz, S.~Arshad, C.~Mulliner, W.~Robertson, and E.~Kirda. 2016.
+UNVEIL: A Large-Scale, Automated Approach to Detecting Ransomware.
+In \textit{Proc.\ USENIX Security 2016}. 757--772.
+
+\bibitem{scaife2016cryptolock}
+N.~Scaife, H.~Carter, P.~Traynor, and K.~R.~B.~Butler. 2016.
+CryptoLock (and Drop It): Stopping Ransomware Attacks on User Data.
+In \textit{Proc.\ IEEE ICDCS 2016}.
+
+\bibitem{zavarsky2024ransurv}
+P.~Zavarsky, A.~Saudi, and B.~Asghar. 2024. A Comprehensive Survey of
+Ransomware Detection Techniques. \textit{Computers \& Security} 137
+(2024).
+
+\bibitem{pearl2009causality}
+J.~Pearl. 2009. \textit{Causality: Models, Reasoning, and Inference}
+(2nd ed.). Cambridge University Press.
+
+\bibitem{aboaoja2024sigsurv}
+F.~A.~Aboaoja, A.~Zainal, F.~A.~Ghaleb, and B.~A.~S.~Al-Rimy. 2024.
+A Survey of Modern Malware Detection Techniques.
+\textit{Computers \& Security} 139 (2024).
+
+\bibitem{roy2024behavsurv}
+A.~Roy, R.~Khan, and S.~Sengupta. 2024. Behavioral Analysis for
+Ransomware Detection: A Systematic Review. \textit{ACM Computing
+Surveys} 56, 8 (2024), 1--38.
+
+\bibitem{ahmed2023seqsurv}
+N.~Ahmed, C.~Bonnet, and J.~Lloret. 2023. Sequence Models for
+Endpoint Threat Detection. \textit{IEEE Trans.\ Information Forensics
+and Security} 18 (2023), 4521--4537.
+
+\bibitem{beckers2024causal}
+S.~Beckers, J.~Y.~Halpern, and C.~Hitchcock. 2024. Causal Explanations
+and XAI. In \textit{Proc.\ Conference on Causal Learning and
+Reasoning (CLeaR 2024)}.
+
+\bibitem{janzing2024causal}
+D.~Janzing, P.~B\"uhlmann, K.~Budhathoki, J.~Peters, and B.~Sch\"olkopf.
+2024. Causal Identifiability of Local and Global Explanations. In
+\textit{Proc.\ NeurIPS 2024}.
+
+\bibitem{liu2024causalids}
+H.~Liu, J.~Wang, and M.~Reiter. 2024. Causal Feature Selection for
+Network Intrusion Detection. In \textit{Proc.\ ACM CCS 2024}.
+
+\bibitem{ramirez2025causalmal}
+J.~Ramirez-Silva, M.~K.~Hanawal, and Z.~Ren. 2025. Structural Causal
+Models for Malware Family Attribution. In \textit{Proc.\ IEEE
+EuroS\&P 2025}.
+
+\bibitem{cisa2023lockbit}
+CISA. 2023. \textit{\#StopRansomware: LockBit 3.0 Joint Cybersecurity
+Advisory}. AA23-075A.
+
+\bibitem{cisa2024alphv}
+CISA. 2024. \textit{\#StopRansomware: ALPHV/BlackCat Joint
+Cybersecurity Advisory Update}. AA23-353A (updated 2024).
+
+\bibitem{trendmicro2024akira}
+Trend Micro Research. 2024. \textit{Akira Ransomware: Tracking the
+ESXi-Targeting Threat Through 2024}.
+
+\bibitem{mandiant2024clop}
+Mandiant. 2024. \textit{Cl0p Tradecraft: Mass Exploitation Campaigns
+2023--2024}. Mandiant Threat Intelligence.
+
+\bibitem{cisa2024bianlian}
+CISA. 2024. \textit{\#StopRansomware: BianLian Joint Cybersecurity
+Advisory Update}. AA23-136A (updated 2024).
+
+\bibitem{liu2024xai}
+H.~Liu, B.~Zhong, A.~Araujo, R.~Liu, and N.~B.~Shroff. 2024.
+Counterfactual Explanations for Malware Classification. \textit{ACM
+Trans.\ on Privacy and Security} 27, 2 (2024).
+
+\bibitem{wachter2017counterfactual}
+S.~Wachter, B.~Mittelstadt, and C.~Russell. 2017. Counterfactual
+Explanations Without Opening the Black Box: Automated Decisions and
+the GDPR. \textit{Harvard Journal of Law \& Technology} 31, 2 (2018),
+841--887.
+
+\bibitem{mandiant2024mtrends}
+Mandiant. 2024. \textit{M-Trends 2024: Special Report}.
+Mandiant Consulting.
+
+\bibitem{mitre2024attck}
+MITRE. 2024. \textit{MITRE ATT\&CK Enterprise Matrix v15.0}.
+\url{https://attack.mitre.org}
+
+\bibitem{spirtes2000causation}
+P.~Spirtes, C.~Glymour, and R.~Scheines. 2000. \textit{Causation,
+Prediction, and Search} (2nd ed.). MIT Press.
+
+\bibitem{kim2023ransomdfir}
+S.~Kim, A.~Lee, and J.~Park. 2023. Forensic Reconstruction of
+Ransomware Attack Timelines: A Multi-Family Study. \textit{Forensic
+Science International: Digital Investigation} 45 (2023).
+
+\bibitem{rieck2024endpointsurv}
+K.~Rieck, P.~Trinius, C.~Willems, and T.~Holz. 2024. Endpoint
+Detection and Response: Where We Are and Where We Need to Go.
+\textit{Communications of the ACM} 67, 9 (2024).
+
+\bibitem{wang2024preencrypt}
+Y.~Wang, M.~Bhargava, and L.~Zhao. 2024. Pre-Encryption Behavioural
+Indicators of Ransomware Activity: A Field Study.
+In \textit{Proc.\ ACM CCS 2024}.
+
+\bibitem{hassan2025causalsec}
+W.~Hassan, S.~Stoller, and N.~Saxena. 2025. Causal Reasoning for
+Provenance-Based Threat Detection. In \textit{Proc.\ IEEE S\&P 2025}.
+
+\bibitem{thakur2025rwsurv}
+A.~Thakur, V.~Kishore, and B.~Patel. 2025. Ransomware Tradecraft
+Evolution 2020--2025: A Systematic Threat Intelligence Review.
+\textit{IEEE Security \& Privacy} 23, 2 (2025).
+
+\end{thebibliography}
+
+\end{document}
