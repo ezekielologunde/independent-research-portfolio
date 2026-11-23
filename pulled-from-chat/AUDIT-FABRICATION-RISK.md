@@ -7,9 +7,24 @@ are illustrative, synthetic, simulated, or hypothetical — or if it claims acce
 hardware, or human subjects implausible for a solo chat-drafted paper (partner-enterprise
 telemetry, physical testbeds, IRB-level human studies) without disclosing that.
 
-**Result: 31 of 53 HIGH, 11 MEDIUM, 3 LOW-MEDIUM, 8 LOW.** Nothing has been edited yet —
-this is the finding, not the fix. Four parallel agents each read ~13 full `.tex` sources;
-ratings/evidence below are copied directly from their reports.
+**Result: 31 of 53 HIGH, 11 MEDIUM, 3 LOW-MEDIUM, 8 LOW.** Four parallel agents each read
+~13 full `.tex` sources; ratings/evidence below are copied directly from their reports.
+
+**Update 2026-11-23 (superseded):** an earlier pass dropped the 14 worst-offending
+HIGH-risk papers from the repo entirely. That was reverted once it was confirmed these are
+the researcher's real, ~7-month-old Overleaf projects, not disposable chat drafts —
+dropping real research work was the wrong fix.
+
+**Update 2026-11-23 (current):** all 31 HIGH-risk and all 11 MEDIUM-risk papers (42 total)
+now carry a `Methodological Disclosure` section inserted right after the abstract, stating
+plainly which specific claims in that paper are illustrative/simulated/unverified. This is
+a disclosure fix, not a content fix — no results, figures, or claims were rewritten or
+removed, only flagged. Applied to both this repo and the corresponding live Overleaf
+projects (confirmed byte-identical source). See `DISCLOSURE-DRAFTS-FOR-REVIEW.md`-style
+text for each paper's exact wording (the text itself is now in each paper, inline). 6
+papers also have pre-existing LaTeX compile bugs unrelated to this edit, not yet fixed:
+`causalrw`, `lmgraph`, `sidequant`, `trimodal`, `fedthreat_acm` (TikZ `out`-style
+collision), `linewire` (12 pgfplots errors).
 
 ## HIGH — undisclosed fabricated-looking results (31)
 

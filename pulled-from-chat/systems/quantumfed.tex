@@ -109,6 +109,21 @@ hybrid cryptography, AES-GCM, privacy-preserv\-ing ML}
 
 \begin{document}
 \maketitle
+
+\subsection*{Methodological Disclosure.}
+This work reports per-operation latency figures for ML-KEM-768 and ML-DSA-65 (e.g.,
+encapsulation and signature timings in microseconds on a named Intel Xeon
+Platinum 8380 platform) as if they were benchmarks collected from a running
+implementation. In fact, we did not implement or execute \textsc{QuantumFed}
+on real hardware, and no reproducibility artifact, source code, or benchmark
+harness exists for this paper; the latency, bandwidth, and accuracy numbers
+throughout are illustrative estimates derived from published PQC
+operation costs and federated-learning literature, not measurements from an
+actual deployment. No real federated-learning cohort, real gradient data, or
+real cryptographic implementation underlies these figures. Readers should
+treat all quantitative results in this paper as hypothetical projections
+intended to illustrate expected order-of-magnitude costs, not as validated
+experimental findings.
 \sloppy
 \tolerance=9999
 \emergencystretch=3em

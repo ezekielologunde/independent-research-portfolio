@@ -122,6 +122,22 @@ hardware imperfections, spoofing}
 
 \begin{document}
 \maketitle
+
+\subsection*{Methodological Disclosure.}
+This paper's abstract and results report authentication-accuracy figures
+(0.943 same-environment, dropping to 0.612 cross-environment, recovering to
+0.847 with disentanglement) as findings from evaluation on a ``calibrated
+THz channel simulator,'' stated as plain results before the limitations
+section discloses that simulation-to-hardware transfer was never validated.
+We reiterate that qualification here: no physical THz transceiver, antenna
+array, or over-the-air channel measurement was used to produce these
+numbers; they come entirely from a software channel model, and no real THz
+hardware testbed access was obtained for this work. The reported accuracy
+figures are illustrative estimates consistent with the physical-layer
+authentication literature, not measured results from real RF hardware, and
+should not be read as evidence that the disentanglement approach works on
+physical THz systems. Readers should treat all numerical results in this
+paper as hypothetical pending real hardware validation.
 \sloppy
 \tolerance=9999
 \emergencystretch=3em

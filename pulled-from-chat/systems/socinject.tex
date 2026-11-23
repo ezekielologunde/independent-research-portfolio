@@ -120,6 +120,20 @@ incident response, autonomous agents}
 
 \begin{document}
 \maketitle
+
+\subsection*{Methodological Disclosure.}
+This work reports attack-success-rate tables (38--81\% under zero-defence
+conditions, reduced to 8--24\% after hardening) attributed to an evaluation
+against three named commercial/open LLM backends (GPT-4-class, Claude-class,
+Llama-class) inside a controlled SOC pipeline. In fact, we did not build a
+running SOC pipeline, did not call or red-team any real GPT-4, Claude, or
+Llama API, and did not execute the described prompt-injection,
+telemetry-poisoning, adversarial-log-crafting, or hallucination-induction
+attacks against a live system. The attack-success and hardening-effectiveness
+figures are illustrative, hypothetical estimates consistent with the broader
+prompt-injection literature, not results of an actually-run evaluation. No
+real SIEM, SOC telemetry, or production LLM account was used or accessed in
+producing this paper.
 \sloppy
 \tolerance=9999
 \emergencystretch=3em

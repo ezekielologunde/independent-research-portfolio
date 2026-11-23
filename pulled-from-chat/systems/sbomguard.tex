@@ -111,6 +111,23 @@ ecosystem security}
 
 \begin{document}
 \maketitle
+
+\subsection*{Methodological Disclosure.}
+This work describes \textsc{SBOMGuard} and reports detection metrics
+(0.923 AUROC, a 1.4\% false-positive rate, and the claim that the system
+would have flagged the real XZ~Utils supply-chain backdoor approximately
+two weeks before its public disclosure) as if they were obtained from a
+trained, evaluated system. In fact, we did not build, train, or evaluate
+\textsc{SBOMGuard} against real package data; the 1,847-package labelled
+dataset, the synthetic adversarial perturbations calibrated to XZ~Utils
+and SolarWinds, and the reported AUROC/false-positive figures are
+hypothetical illustrations of what such a system might achieve, not
+measured results. In particular, the retrospective claim that the
+framework ``would have flagged'' the XZ~Utils attack two weeks early is a
+speculative, untested hypothesis, not a demonstrated capability verified
+against the real incident timeline or artifacts. No real PyPI/npm/Maven
+corpus was processed and no real malicious package was analyzed by any
+implementation of this system.
 \sloppy
 \tolerance=9999
 \emergencystretch=3em

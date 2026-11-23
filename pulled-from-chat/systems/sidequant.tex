@@ -115,6 +115,21 @@ hiding, transformer, CNN, hardware security, embedded cryptography}
 
 \begin{document}
 \maketitle
+
+\subsection*{Methodological Disclosure.}
+This work reports side-channel key-recovery trace counts, including the
+reduction factors achieved by deep-learning attacks and the degradation
+imposed by masking, attributed to evaluation on an ARM Cortex-M4
+microcontroller, a RISC-V soft core on FPGA, and a hardware-accelerated
+ASIC reference design. In fact, we did not acquire physical traces from, or
+run attacks on, any of these three platforms; no ChipWhisperer or other
+side-channel acquisition hardware was used, and the trace-count,
+masking-order, and platform-specific figures reported throughout are
+illustrative, projected estimates informed by the published side-channel
+literature, not measurements collected from real silicon. No real hardware
+evaluation underlies the 27 attack-platform-scheme configurations
+described. These figures should be read as hypothetical targets for future
+empirical validation, not as reproduced experimental results.
 \sloppy
 \tolerance=9999
 \emergencystretch=3em

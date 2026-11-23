@@ -4,14 +4,28 @@ These papers were pulled from a long claude.ai conversation (shared link). That 
 conversation was originally used to extract the LaTeX figure-sizing guidance already in
 this repo at `conventions/acm-ieee-tikz-figures.md`.
 
-## Status: UNREVIEWED
+## Status: UNREVIEWED, fabrication risk disclosed
 
-**Nothing in this folder has been reviewed.** No one has checked these papers for
-factual accuracy, fabricated results/citations, methodological soundness, or general
-quality. They have **not** been added to `RESEARCHGATE.md` or any other tracker. None of
-this has been checked against the no-fabrication standard this researcher holds his real
-(published/in-progress) work to. Treat every claim, number, and citation in these drafts
-as unverified until someone goes through them individually.
+**Still not fully reviewed for accuracy.** A fact-check audit (see
+`AUDIT-FABRICATION-RISK.md`) found 42 of these papers (31 HIGH + 11 MEDIUM risk) presented
+specific quantitative "results" or real-world-access claims as settled fact with no
+disclaimer they were illustrative/simulated. All 42 now carry a `Methodological
+Disclosure` section, inserted right after the abstract, stating plainly which claims in
+that specific paper are illustrative/simulated/unverified and that no real deployment,
+human subjects, partner data, or hardware evaluation underlies them. Nothing else in any
+paper's content, figures, or results sections was changed or fact-checked beyond that —
+the disclosures flag the problem, they don't fix the underlying work. These papers are
+also live in this researcher's Overleaf account (confirmed identical content); the same
+disclosures are being applied there too. They have **not** been added to `RESEARCHGATE.md`
+or any other tracker. Treat every claim, number, and citation in these drafts as unverified
+beyond what each paper's own disclosure now states, until someone goes through them
+individually.
+
+6 papers also have pre-existing LaTeX compile bugs, confirmed present before this edit and
+unrelated to it (same TikZ `out`-style-name collision documented in
+`conventions/acm-ieee-tikz-figures.md`, plus one separate pgfplots issue): `causalrw`,
+`lmgraph`, `sidequant`, `trimodal`, `fedthreat_acm` (TikZ), and `linewire` (12 undefined
+pgfplots-coordinate errors). Not yet fixed.
 
 ## Deliberately excluded (duplicates of existing work)
 

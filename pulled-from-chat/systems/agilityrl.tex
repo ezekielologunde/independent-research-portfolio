@@ -122,6 +122,26 @@ algorithm migration, threat-driven decision, hybrid cryptography}
 \emergencystretch=3em
 \hfuzz=10pt
 
+\subsection*{Methodological Disclosure.}
+This work's evaluation, including the reported 41\% reduction in
+cumulative risk exposure and 23\% reduction in migration cost relative
+to baseline policies, was produced entirely within a calibrated
+simulation environment and does not reflect measurements from a real
+production deployment, a live cryptographic migration, or any
+operational security system. We did not implement, train, or deploy an
+actual DQN agent against real threat telemetry; the quantitative
+results above are illustrative outputs of a simulation environment
+whose parameters we selected, and they should not be read as empirical
+evidence of real-world performance. The IBM Cost of a Data Breach
+Report statistic we cite (71\% of organisations unable to complete a
+migration in under 18 months) is drawn from a secondary characterisation
+we have not independently verified against the original report and
+should be treated with corresponding caution. We flag this explicitly
+because no such disclaimer accompanied these figures elsewhere in the
+text, and we want readers to treat \textsc{AgilityRL} as a conceptual
+framework and simulated proof-of-concept rather than as a validated
+empirical result.
+
 \section{Introduction}
 
 Cryptographic agility is the operational property that a system can
