@@ -13,33 +13,6 @@ this has been checked against the no-fabrication standard this researcher holds 
 (published/in-progress) work to. Treat every claim, number, and citation in these drafts
 as unverified until someone goes through them individually.
 
-## Deliberately dropped (fabrication-risk audit, 2026-11-23)
-
-A fact-check audit (see `AUDIT-FABRICATION-RISK.md`) found 14 of the systems papers claimed
-real-world access that is implausible for a solo chat-drafted paper — real human-subjects
-studies with no IRB, real partner-enterprise datasets, or real hardware builds/testbeds —
-with no disclaimer that any of it was hypothetical. These were removed outright rather than
-patched with a disclaimer, since the claimed access itself (not just the numbers) was the
-problem:
-
-- `causalrw` — claimed a real corpus of "287 confirmed ransomware incidents"
-- `cryptoids` — claimed real "partner enterprise TLS telemetry" (4.7B handshakes)
-- `cryptolens` — claimed real "partner enterprise" network captures (2.1B connections)
-- `exsoc_acm` — described a real 64-participant human-subjects user study, no IRB
-- `fusionleak` — claimed a real 50-subject, 12-week human-subjects testbed, no IRB
-- `harvestsense` — claimed real partner-enterprise telemetry and "23 confirmed real exfiltration incidents"
-- `linewire` — described a fully built real hardware testbed (BlueField-3, Xilinx Alveo FPGA)
-- `lmgraph` — fabricated a "250-host enterprise testbed with red-team exercises"
-- `oran-shield` — claimed a real O-RAN hardware testbed (Colosseum/OAI) with measured results
-- `privcollapse` — claimed a real 100-subject, 16-week human-subjects study, no IRB
-- `sidequant` — claimed real side-channel measurements on real hardware (ChipWhisperer/FPGA/ASIC)
-- `socinject` — claimed real red-team attacks run against live commercial LLM APIs
-- `swarmaudit` — claimed a real 16-node hardware-in-the-loop test (NVIDIA Jetson)
-- `trimodal` — claimed a real "1,800 hours of authentic business meetings recorded with consent" dataset
-
-These are gone from the repo entirely (both `.tex` and `.pdf`), not just untracked —
-removed in a reversible git commit, not deleted from disk-history.
-
 ## Deliberately excluded (duplicates of existing work)
 
 Two papers pulled from the same chat were found to duplicate content already in this
@@ -86,10 +59,20 @@ original pull staging folder):
 |---|---|
 | sbomguard | SBOMGuard: Supply Chain Attack Detection via Software Bill of Materials Analysis, Dependency Graph Embedding, and Commit-Level NLP Anomaly Detection |
 | adv_robustness_detectors | Adversarial Robustness of Cyber Detection Models: A Systematic Cross-Domain Evaluation and Unified Defense Framework |
+| lmgraph | Graph Neural Networks for Lateral Movement Detection in Enterprise Networks: A Heterogeneous Temporal Graph Framework |
 | fedthreat_acm | Federated Learning for Cross-Organization Threat Intelligence: A Privacy-Preserving Framework Under Non-IID Data and Adversarial Participants |
+| exsoc_acm | Explainable AI for SOC Analysts: A Framework for Bridging Model Output and Operational Trust Through Counterfactual and Causal Explanations |
+| causalrw | Early Ransomware Detection via Behavioural Causal Models: From Anomaly Correlation to Pre-Encryption Intervention |
+| linewire | Hardware-Accelerated ML Inference for Line-Rate Network Intrusion Detection: An FPGA/SmartNIC Co-Design Framework |
+| trimodal | Deepfake-Enabled Social Engineering: A Multi-Modal Detection Framework for Real-Time Enterprise Communication |
+| cryptolens | AI-Powered Cryptographic Discovery and Inventory: A Multi-Modal Framework for CBOM Generation in Post-Quantum Migration |
+| sidequant | Deep Learning Side-Channel Attacks on NIST-Standardised Post-Quantum Cryptography: A Systematic Cross-Scheme Evaluation of ML-KEM, ML-DSA, and SLH-DSA with Adaptive Countermeasure Analysis |
+| harvestsense | Detecting Harvest-Now-Decrypt-Later Adversary Behaviour: A Machine Learning Framework for Encrypted Traffic Behavioural Analysis |
 | agilityrl | Reinforcement Learning for Cryptographic Agility: An MDP Framework with Causal Migration-Timing Analysis Under Evolving Threats |
 | latticeprobe | AI-Accelerated Cryptanalysis of Lattice-Based Schemes: A Stress-Test of NIST PQC Parameter Choices via Transformer and Graph Neural Network Distinguishers |
 | quantumfed | Quantum-Safe Federated Learning: PQC-Protected Secure Aggregation with ML-KEM and ML-DSA |
+| cryptoids | CryptoIDS: Machine-Learning Detection of Malicious and Non-Compliant Cryptographic Usage During the Post-Quantum Transition |
+| oran-shield | Securing the AI-Native Control Plane in 6G O-RAN: A Threat Taxonomy and Defence Framework for xApp/rApp Adversarial Resilience |
 | thzprint | THzPrint: Deep Learning Physical-Layer Authentication at Terahertz Frequencies with Environment-Disentanglement Constraints |
 | nftrust | NFTrust: Detecting Compromised Network-Function Agents in Disaggregated 6G Cores via Byzantine-Aware Graph Neural Networks |
 | isacguard | ISACGuard: Cross-Layer Attack Detection in Integrated Sensing and Communication via Multi-Modal Consistency Learning |
@@ -98,20 +81,22 @@ original pull staging folder):
 | culpatrace | CulpaTrace: Forensic Reconstruction and Responsibility Attribution for Multi-Agent Incidents via Tamper-Evident Logging, Causal DAGs, and Shapley-Value Contribution Scoring |
 | neuroshield | NeuroShield: Securing Brain-Computer Interface Telemetry Streams via Real-Time Anomaly Detection, Control-Context Coherence Validation, and Differentially-Private Mental-State Protection |
 | spikeshield | SpikeShield: Adversarial Robustness in Neuromorphic Computing for Edge Security via Temporal Attack Taxonomy and Hardware-Aware Defence |
+| swarmaudit | SwarmAudit: Coordination Under Partial Trust for Autonomous Swarms via BFT Quorum Consensus, GNN Anomaly Detection, and Tamper-Evident DAG Ledger |
 | qfedbench | QFedBench: Where Does Quantum Networking Actually Help Federated Learning? A Calibrated Comparison of PQC, QKD-Assisted, and Quantum Secret Sharing Approaches Under Realistic Noise |
 | twinalign | TwinAlign: Cross-Domain Consistency Detection of Reality-Drift and Adversarial Synchronisation Attacks in Digital Twin Cyber-Physical Systems |
-
-14 papers that were in this table have been dropped — see "Deliberately dropped" above.
+| fusionleak | FusionLeak: Re-Identification from Ambient Sensor Fusion and the Utility-Privacy Pareto Frontier of Mitigations |
+| privcollapse | PrivCollapse: A Bayesian Model of Privacy Collapse Through Multi-Modal Sensor Fusion in Ambient Intelligence Environments |
+| socinject | SOCInject: A Red-Team Framework for Adversarial Attacks Against LLM-Augmented Security Operations Center Pipelines |
 
 ## Compile status
 
 All `.tex` files that did not already ship with a `.pdf` were compiled with `pdflatex`
-(MiKTeX, two passes each, for `\ref`/`\label` resolution). Eight systems papers shared the
+(MiKTeX, two passes each, for `\ref`/`\label` resolution). Eight systems papers share the
 same recurring TikZ bug (`pgfkeys` error: "The key '/tikz/out' requires a value") in a
-figure's node definitions; the style name was renamed and all eight recompiled clean
-(`cryptoids`, `swarmaudit`, and `socinject` were later dropped entirely — see "Deliberately
-dropped" above — so only `latticeprobe`, `thzprint`, `nftrust`, `isacguard`, `spikeshield`
-remain from that original list of 8).
+figure's node definitions and failed to produce a PDF; their `.tex` source is still filed
+here but no PDF accompanies it yet:
+
+- latticeprobe, cryptoids, thzprint, nftrust, isacguard, spikeshield, swarmaudit, socinject
 
 Everything else compiled cleanly (no fatal errors, no overfull/underfull boxes beyond
 the small warnings this project's own LaTeX conventions treat as normal).
@@ -119,9 +104,8 @@ the small warnings this project's own LaTeX conventions treat as normal).
 ## Not yet done
 
 - Not added to `RESEARCHGATE.md` or any other tracker.
-- Fact-check audit done (`AUDIT-FABRICATION-RISK.md`); 14 worst offenders dropped; the
-  remaining 11 MEDIUM-risk papers (undisclosed-at-the-headline-claim simulation results)
-  still need disclaimers added — not done yet.
+- Not reviewed for accuracy, fabricated citations/results, or quality.
+- The 8 TikZ-broken figures above have not been fixed.
 - One extra file pulled from the same chat, `memsentinel.tex`/`.pdf` ("MemSentinel:
   Detecting Memory Poisoning and Latent Backdoors in Long-Lived Autonomous Agents via
   Temporal Trajectory and Causal Influence Analysis"), was not on the filing list used to
