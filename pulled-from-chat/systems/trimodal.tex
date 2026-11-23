@@ -381,7 +381,7 @@ architecture.
   fus/.style={rectangle, rounded corners=3pt, draw=cpur!60, very thick,
               fill=cpur!12, minimum width=2.6cm, minimum height=0.85cm,
               text centered, align=center},
-  out/.style={rectangle, rounded corners=3pt, draw=cred!60, very thick,
+  outn/.style={rectangle, rounded corners=3pt, draw=cred!60, very thick,
               fill=cred!12, minimum width=2.6cm, minimum height=0.7cm,
               text centered, align=center, inner sep=3pt},
   arr/.style={-{Stealth}, thick, cgry!60}
@@ -418,7 +418,7 @@ architecture.
     {Attention fusion (dynamic re-weighting)};
 
   %% Output
-  \node[out] (det) at (12.8, 0.0)
+  \node[outn] (det) at (12.8, 0.0)
     {Real-time score + alert};
 
   %% Arrows

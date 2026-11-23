@@ -374,7 +374,7 @@ Figure~\ref{fig:framework} presents the \textsc{LMGraph} framework.
   enc/.style={rectangle, rounded corners=2pt, draw=cgrn!60, thick,
               fill=cgrn!12, minimum width=2.6cm, minimum height=0.65cm,
               text centered, inner sep=3pt},
-  out/.style={rectangle, rounded corners=3pt, draw=cred!60, thick,
+  outn/.style={rectangle, rounded corners=3pt, draw=cred!60, thick,
               fill=cred!12, minimum width=2.6cm, minimum height=0.70cm,
               text centered},
   arr/.style={-{Stealth}, thick, cgry!60}
@@ -402,7 +402,7 @@ Figure~\ref{fig:framework} presents the \textsc{LMGraph} framework.
     {ATT\&CK synthetic path injection};
 
   %% Stage 5: Path scoring
-  \node[out] (sc) at (13.4, -0.32) {Path anomaly score + attention rationale};
+  \node[outn] (sc) at (13.4, -0.32) {Path anomaly score + attention rationale};
 
   \draw[arr] (s1.east) -- (gc.west);
   \draw[arr] (s2.east) -- (gc.west);

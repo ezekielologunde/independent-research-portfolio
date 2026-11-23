@@ -461,7 +461,7 @@ Figure~\ref{fig:framework} presents the framework architecture.
   inv/.style={rectangle, rounded corners=2pt, draw=cpur!60, thick,
               fill=cpur!12, minimum width=2.6cm, minimum height=0.65cm,
               text centered, inner sep=3pt},
-  out/.style={rectangle, rounded corners=3pt, draw=cred!60, thick,
+  outn/.style={rectangle, rounded corners=3pt, draw=cred!60, thick,
               fill=cred!12, minimum width=2.6cm, minimum height=0.85cm,
               text centered, align=center},
   arr/.style={-{Stealth}, thick, cgry!60}
@@ -481,7 +481,7 @@ Figure~\ref{fig:framework} presents the framework architecture.
   \node[inv] (cf) at (9.4, -0.32)
     {Counterfactual intervention};
 
-  \node[out] (soc) at (12.6, -0.32)
+  \node[outn] (soc) at (12.6, -0.32)
     {Alert + intervention recommendation};
 
   \draw[arr] (s1.east) -- (stg.west);

@@ -344,7 +344,7 @@ Figure~\ref{fig:framework} presents the \textsc{FedThreat} architecture.
   org/.style={rectangle, rounded corners=3pt, draw=cblu!60, thick,
               fill=cblu!10, minimum width=1.9cm, minimum height=0.78cm,
               text centered, align=center, inner sep=3pt},
-  step/.style={rectangle, rounded corners=2pt, draw=cgrn!60, thick,
+  vstep/.style={rectangle, rounded corners=2pt, draw=cgrn!60, thick,
                fill=cgrn!10, minimum width=2.2cm, minimum height=0.55cm,
                text centered, font=\fontsize{6pt}{7.5pt}\selectfont, inner sep=2pt},
   agg/.style={rectangle, rounded corners=3pt, draw=cpur!60, thick,
@@ -359,14 +359,14 @@ Figure~\ref{fig:framework} presents the \textsc{FedThreat} architecture.
   \node[font=\fontsize{8pt}{10pt}\selectfont] at (0,-2.2) {$\vdots$};
 
   %% Local training boxes
-  \node[step] (l1) at (3.4, 1.6) {Local SGD + clip + noise};
-  \node[step] (l2) at (3.4, 0.0) {Local SGD + clip + noise};
-  \node[step] (l3) at (3.4,-1.6) {Local SGD + clip + noise};
+  \node[vstep] (l1) at (3.4, 1.6) {Local SGD + clip + noise};
+  \node[vstep] (l2) at (3.4, 0.0) {Local SGD + clip + noise};
+  \node[vstep] (l3) at (3.4,-1.6) {Local SGD + clip + noise};
 
   %% Secure encryption
-  \node[step, fill=cyel!12, draw=cyel!55] (s1) at (6.4, 1.6) {SecAgg mask};
-  \node[step, fill=cyel!12, draw=cyel!55] (s2) at (6.4, 0.0) {SecAgg mask};
-  \node[step, fill=cyel!12, draw=cyel!55] (s3) at (6.4,-1.6) {SecAgg mask};
+  \node[vstep, fill=cyel!12, draw=cyel!55] (s1) at (6.4, 1.6) {SecAgg mask};
+  \node[vstep, fill=cyel!12, draw=cyel!55] (s2) at (6.4, 0.0) {SecAgg mask};
+  \node[vstep, fill=cyel!12, draw=cyel!55] (s3) at (6.4,-1.6) {SecAgg mask};
 
   %% Aggregator
   \node[agg] (ag) at (10.0, 0.0)

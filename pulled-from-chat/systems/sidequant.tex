@@ -406,10 +406,10 @@ Figure~\ref{fig:framework} presents the experimental framework.
   mod/.style={rectangle, rounded corners=2pt, draw=cpur!60, thick,
               fill=cpur!12, minimum width=2.4cm, minimum height=0.6cm,
               text centered, inner sep=3pt},
-  cm/.style={rectangle, rounded corners=2pt, draw=cyel!55, thick,
+  cmn/.style={rectangle, rounded corners=2pt, draw=cyel!55, thick,
              fill=cyel!12, minimum width=2.4cm, minimum height=0.6cm,
              text centered, inner sep=3pt},
-  out/.style={rectangle, rounded corners=3pt, draw=cred!60, very thick,
+  outn/.style={rectangle, rounded corners=3pt, draw=cred!60, very thick,
               fill=cred!12, minimum width=2.6cm, minimum height=0.85cm,
               text centered, align=center},
   arr/.style={-{Stealth}, thick, cgry!60}
@@ -434,15 +434,15 @@ Figure~\ref{fig:framework} presents the experimental framework.
   \node[mod] (m3) at (8.6, -0.40) {Hybrid CNN+T};
 
   %% Countermeasure layer (parallel)
-  \node[cm] (cm1) at (8.6, -1.40) {Masking};
-  \node[cm] (cm2) at (8.6, -2.10) {Hiding};
-  \node[cm] (cm3) at (8.6, -2.80) {Shuffling};
+  \node[cmn] (cm1) at (8.6, -1.40) {Masking};
+  \node[cmn] (cm2) at (8.6, -2.10) {Hiding};
+  \node[cmn] (cm3) at (8.6, -2.80) {Shuffling};
 
   %% Outputs
-  \node[out] (out) at (12.6, 0.40)
+  \node[outn] (out) at (12.6, 0.40)
     {Trace-count to key recovery};
 
-  \node[out, fill=cyel!18, draw=cyel!55] (out2) at (12.6, -2.10)
+  \node[outn, fill=cyel!18, draw=cyel!55] (out2) at (12.6, -2.10)
     {Defence trace budget};
 
   \draw[arr] (t1)--(s1); \draw[arr] (t2)--(s2); \draw[arr] (t3)--(s3);
