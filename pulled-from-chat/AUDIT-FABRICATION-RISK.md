@@ -7,9 +7,15 @@ are illustrative, synthetic, simulated, or hypothetical — or if it claims acce
 hardware, or human subjects implausible for a solo chat-drafted paper (partner-enterprise
 telemetry, physical testbeds, IRB-level human studies) without disclosing that.
 
-**Result: 31 of 53 HIGH, 11 MEDIUM, 3 LOW-MEDIUM, 8 LOW.** Nothing has been edited yet —
-this is the finding, not the fix. Four parallel agents each read ~13 full `.tex` sources;
-ratings/evidence below are copied directly from their reports.
+**Result: 31 of 53 HIGH, 11 MEDIUM, 3 LOW-MEDIUM, 8 LOW.** Four parallel agents each read
+~13 full `.tex` sources; ratings/evidence below are copied directly from their reports.
+
+**Update 2026-11-23:** of the 31 HIGH-risk papers, the 14 that claimed real human-subjects
+access, real partner-enterprise data, or real hardware builds (as opposed to "merely"
+undisclosed simulator numbers) have been **dropped from the repo entirely** — see
+`README.md`'s "Deliberately dropped" section for the list and reasoning. Rows below for
+those 14 are marked DROPPED. The remaining 17 HIGH-risk papers and all 11 MEDIUM-risk
+papers are unchanged, still flagged, not yet disclaimed or fixed.
 
 ## HIGH — undisclosed fabricated-looking results (31)
 
@@ -24,28 +30,33 @@ ratings/evidence below are copied directly from their reports.
 | systems/adv_robustness_detectors.tex | Detailed PGD-attack accuracy-drop tables from no actual executed experiment |
 | systems/agenttrust.tex | AUROC/cost numbers from an uncited "custom simulator"; templated author names repeat across unrelated papers |
 | systems/agilityrl.tex | "Calibrated simulation" RL results stated as real; unverified IBM citation stat |
-| coursework/causalrw.tex | Claims a "corpus of 287 confirmed ransomware incidents" with precise detection results, never disclosed as notional |
+| systems/causalrw.tex — **DROPPED** | Claims a "corpus of 287 confirmed ransomware incidents" with precise detection results, never disclosed as notional |
 | coursework/riskbridge.tex | Precise $ and % figures attributed to a "2025 FAIR Institute report" that reads as invented |
-| systems/cryptoids.tex | Claims real "partner enterprise TLS telemetry" (4.7B handshakes) — implausible data access, no disclaimer |
-| systems/cryptolens.tex | Claims "18 months of partner enterprise" network captures (2.1B connections), precise F1 tables |
-| systems/exsoc_acm.tex | Describes a full human-subjects user study (64 participants, compensation, p-values) as if actually run; no IRB |
-| systems/fusionleak.tex | Claims a real 50-subject, 12-week human testbed with named hardware; no IRB mentioned, implausible |
-| systems/harvestsense.tex | Claims "14 months of partner enterprise telemetry" and "23 confirmed real exfiltration incidents" |
-| systems/linewire.tex | Describes a fully built hardware testbed (dual BlueField-3, Xilinx Alveo FPGA, Spirent generator) with no disclaimer it's hypothetical |
-| systems/lmgraph.tex | Fabricates a "250-host testbed with red-team exercises" layered onto real public datasets, presented as real |
+| systems/cryptoids.tex — **DROPPED** | Claims real "partner enterprise TLS telemetry" (4.7B handshakes) — implausible data access, no disclaimer |
+| systems/cryptolens.tex — **DROPPED** | Claims "18 months of partner enterprise" network captures (2.1B connections), precise F1 tables |
+| systems/exsoc_acm.tex — **DROPPED** | Describes a full human-subjects user study (64 participants, compensation, p-values) as if actually run; no IRB |
+| systems/fusionleak.tex — **DROPPED** | Claims a real 50-subject, 12-week human testbed with named hardware; no IRB mentioned, implausible |
+| systems/harvestsense.tex — **DROPPED** | Claims "14 months of partner enterprise telemetry" and "23 confirmed real exfiltration incidents" |
+| systems/linewire.tex — **DROPPED** | Describes a fully built hardware testbed (dual BlueField-3, Xilinx Alveo FPGA, Spirent generator) with no disclaimer it's hypothetical |
+| systems/lmgraph.tex — **DROPPED** | Fabricates a "250-host testbed with red-team exercises" layered onto real public datasets, presented as real |
 | systems/neuroshield.tex | BCI AUROC/latency from a "calibrated simulator" stated as fact, no disclaimer |
 | systems/nftrust.tex | 6G-core AUROC/detection-time from simulator, no "illustrative" framing |
-| systems/oran-shield.tex | O-RAN accuracy/throughput tables from testbed, presented factually |
-| systems/privcollapse.tex | Claims "100 enrolled subjects over 16 weeks" — implausible real human-subjects study, no IRB disclosure |
+| systems/oran-shield.tex — **DROPPED** | O-RAN accuracy/throughput tables from testbed, presented factually |
+| systems/privcollapse.tex — **DROPPED** | Claims "100 enrolled subjects over 16 weeks" — implausible real human-subjects study, no IRB disclosure |
 | systems/quantumfed.tex | Precise PQC op-latency benchmarks ("75 μs" on named Xeon) with no reproducibility artifact |
 | systems/sbomguard.tex | Claims system would have caught the real XZ Utils attack 2 weeks early — retrospective claim stated as fact |
-| systems/sidequant.tex | Side-channel trace-count results attributed to real hardware (ChipWhisperer/FPGA/ASIC), no disclaimer whether actually run |
-| systems/socinject.tex | Red-team attack-success-rate tables against named real LLM APIs (GPT-4/Claude/Llama), no disclaimer |
+| systems/sidequant.tex — **DROPPED** | Side-channel trace-count results attributed to real hardware (ChipWhisperer/FPGA/ASIC), no disclaimer whether actually run |
+| systems/socinject.tex — **DROPPED** | Red-team attack-success-rate tables against named real LLM APIs (GPT-4/Claude/Llama), no disclaimer |
 | systems/spikeshield.tex | Neuromorphic-chip accuracy drop stated in abstract before limitations disclose it's simulator-only |
-| systems/swarmaudit.tex | Claims a real "16-node hardware-in-the-loop" test with NVIDIA Jetson hardware, no disclaimer |
+| systems/swarmaudit.tex — **DROPPED** | Claims a real "16-node hardware-in-the-loop" test with NVIDIA Jetson hardware, no disclaimer |
 | systems/thzprint.tex | THz auth accuracy figures stated as findings before limitations disclose simulation-only |
-| systems/trimodal.tex | Claims a real "1,800 hours of authentic business meetings recorded with consent" dataset — concrete, undisclosed fabrication |
+| systems/trimodal.tex — **DROPPED** | Claims a real "1,800 hours of authentic business meetings recorded with consent" dataset — concrete, undisclosed fabrication |
 | systems/twinalign.tex | Digital-twin AUROC/localization numbers from simulators, stated as measured fact |
+
+Note: `sbomguard.tex` (retrospective claim about the real XZ Utils attack) was considered
+for dropping but kept for now — it's a false-capability claim rather than a claim of
+implausible real-world data/hardware/subject access, so it's left for the disclaimer track
+along with the MEDIUM-risk papers.
 
 ## MEDIUM — simulation disclosed somewhere, but not at the headline claim (11)
 
